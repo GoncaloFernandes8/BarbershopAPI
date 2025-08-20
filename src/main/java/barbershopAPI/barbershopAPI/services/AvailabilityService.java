@@ -54,8 +54,10 @@ public class AvailabilityService {
                 OffsetDateTime s = cand.toOffsetDateTime();
                 OffsetDateTime e = cand.plus(needed).toOffsetDateTime();
 
-                boolean busy = appointmentRepo.existsActiveOverlap(barberId, s, e)
-                        || timeOffRepo.existsOverlap(barberId, s, e);
+                boolean busy =
+                        appointmentRepo.existsByBarberIdAndIsActiveTrueAndStartsAtLessThanAndEndsAtGreaterThan(barberId, e, s)
+                                || timeOffRepo.existsByBarberIdAndStartsAtLessThanAndEndsAtGreaterThan(barberId, e, s);
+
                 if (!busy) slots.add(s);
             }
         }
