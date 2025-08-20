@@ -1,6 +1,6 @@
 package barbershopAPI.barbershopAPI.entities;
 
-import barbershopAPI.barbershopAPI.utils.DayOfWeekConverter;
+import barbershopAPI.barbershopAPI.utils.Translators.DayOfWeekConverter;
 import jakarta.persistence.*;
 import lombok.*;
 

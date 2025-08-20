@@ -9,19 +9,13 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-@RestController
-@RequestMapping("/availability")
-@RequiredArgsConstructor
+@RestController @RequestMapping("/availability") @RequiredArgsConstructor
 public class AvailabilityController {
-
     private final AvailabilityService availabilityService;
-
     @GetMapping
-    public List<OffsetDateTime> get(
-            @RequestParam Long barberId,
-            @RequestParam Long serviceId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-    ) {
+    public List<OffsetDateTime> get(@RequestParam Long barberId,
+                                    @RequestParam Long serviceId,
+                                    @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return availabilityService.getAvailableStarts(barberId, serviceId, date);
     }
 }

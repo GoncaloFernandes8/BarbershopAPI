@@ -2,8 +2,8 @@ package barbershopAPI.barbershopAPI.services;
 
 import barbershopAPI.barbershopAPI.entities.*;
 import barbershopAPI.barbershopAPI.repositories.*;
-import barbershopAPI.barbershopAPI.dto.AppointmentResponse;
-import barbershopAPI.barbershopAPI.dto.CreateAppointmentRequest;
+import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.AppointmentResponse;
+import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.CreateAppointmentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class AppointmentService {
         OffsetDateTime endsAt   = startsAt.plusMinutes(mins);
 
         // pré-checagem rápida de conflito (melhor UX)
-        boolean busy = appointmentRepo.existsActiveOverlap(barber.getId(), startsAt, endsAt);
+        boolean busy = appointmentRepo.existsByBarberIdAndIsActiveTrueAndStartsAtLessThanAndEndsAtGreaterThan(barber.getId(), startsAt, endsAt);
         if (busy) throw new SlotConflictException("Slot já ocupado para este barbeiro");
 
         var appt = Appointment.builder()

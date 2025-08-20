@@ -1,4 +1,4 @@
-package barbershopAPI.barbershopAPI.utils;
+package barbershopAPI.barbershopAPI.utils.Translators;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

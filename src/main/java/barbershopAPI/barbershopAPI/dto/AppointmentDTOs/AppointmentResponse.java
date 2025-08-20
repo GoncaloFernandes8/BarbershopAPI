@@ -1,4 +1,4 @@
-package barbershopAPI.barbershopAPI.dto;
+package barbershopAPI.barbershopAPI.dto.AppointmentDTOs;
 
 
 import java.time.OffsetDateTime;
