@@ -35,9 +35,12 @@ public class WorkingHoursController {
 
     @GetMapping
     public List<WorkingHoursResponse> listByBarber(@RequestParam Long barberId) {
-        return repo.findByBarberIdOrderByDayOfWeekAscStartTimeAsc(barberId).stream()
-                .map(wh -> new WorkingHoursResponse(wh.getId(), wh.getBarber().getId(),
-                        wh.getDayOfWeek().getValue(), wh.getStartTime().toString(), wh.getEndTime().toString()))
+        return repo.findByBarber_IdOrderByDayOfWeekAscStartTimeAsc(barberId).stream()
+                .map(wh -> new WorkingHoursResponse(
+                        wh.getId(), wh.getBarber().getId(),
+                        wh.getDayOfWeek().getValue(),
+                        wh.getStartTime().toString(),
+                        wh.getEndTime().toString()))
                 .toList();
     }
 

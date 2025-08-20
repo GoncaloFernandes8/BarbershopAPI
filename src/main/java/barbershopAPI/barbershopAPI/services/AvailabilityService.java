@@ -36,7 +36,7 @@ public class AvailabilityService {
         int neededMin = service.getDurationMin() + buffer;
         Duration needed = Duration.ofMinutes(neededMin);
 
-        List<WorkingHours> whs = workingHoursRepo.findForDay(barberId, day.getDayOfWeek());
+        List<WorkingHours> whs = workingHoursRepo.findByBarber_IdAndDayOfWeekOrderByStartTimeAsc(barberId, day.getDayOfWeek());
         List<OffsetDateTime> slots = new ArrayList<>();
         ZonedDateTime nowLisbon = ZonedDateTime.now(TZ);
 

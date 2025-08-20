@@ -8,15 +8,10 @@ import java.util.List;
 
 
 public interface WorkingHoursRepository extends JpaRepository<WorkingHours, Long> {
-    @Query("""
-      select w from WorkingHours w
-      where w.barber.id = :barberId and w.dayOfWeek = :dow
-      order by w.startTime
-    """)
-    List<WorkingHours> findForDay(@Param("barberId") Long barberId, @Param("dow") DayOfWeek dow);
 
-    // ✅ para listar tudo do barbeiro, ordenado
-    List<WorkingHours> findByBarberIdOrderByDayOfWeekAscStartTimeAsc(Long barberId);
+    // listar todos os horários de um barbeiro, ordenados por dia e hora
+    List<WorkingHours> findByBarber_IdOrderByDayOfWeekAscStartTimeAsc(Long barberId);
 
-    List<WorkingHours> findAllForBarberOrdered(@Param("barberId") Long barberId);
+    // horários de UM dia específico, ordenados por hora
+    List<WorkingHours> findByBarber_IdAndDayOfWeekOrderByStartTimeAsc(Long barberId, DayOfWeek dayOfWeek);
 }
