@@ -19,7 +19,14 @@ public class Client {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String phone;
+
+    @Column(unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
