@@ -20,7 +20,7 @@ public class ClientController {
 
     @PostMapping
     public ClientResponse create(@Valid @RequestBody ClientCreateRequest req) {
-        Client c = Client.builder().name(req.name()).phone(req.phone()).build();
+        Client c = Client.builder().name(req.name()).phone(req.phone()).email(req.email()).password(req.password()).build();
         c = repo.save(c);
         return new ClientResponse(c.getId(), c.getName(), c.getPhone());
     }
