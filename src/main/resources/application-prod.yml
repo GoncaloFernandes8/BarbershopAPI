@@ -1,14 +1,40 @@
 server:
   port: ${PORT:8080}
+  servlet:
+    context-path: /barbershop   # <— remove/commena se NÃO usares este prefixo na API
 
 spring:
   datasource:
-    url: ${DB_URL}
+    url: ${DB_URL}        # ex.: jdbc:postgresql://<host-pooler>:5432/<db>?sslmode=require&prepareThreshold=0
     username: ${DB_USER}
     password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 0
+      idle-timeout: 600000
+      connection-timeout: 30000
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: validate   # para produção; em dev podes sobrepor com SPRING_JPA_HIBERNATE_DDL_AUTO=update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  mvc:
+    cors:
+      mappings:
+        "[/**]":
+          allowed-origins:
+            - "http://localhost:4200"
+            - "https://<o_teu_frontend>.koyeb.app"
+          allowed-methods:
+            - GET
+            - POST
+            - PUT
+            - PATCH
+            - DELETE
+            - OPTIONS
+          allowed-headers: "*"
+          exposed-headers:
+            - "Location"
+          allow-credentials: true
+          max-age: 3600
