@@ -2,7 +2,6 @@ package barbershopAPI.barbershopAPI.services.Auth;
 
 
 
-import barbershopAPI.barbershopAPI.dto.*;
 import barbershopAPI.barbershopAPI.dto.AuthDTOs.AuthUserDto;
 import barbershopAPI.barbershopAPI.dto.AuthDTOs.LoginRequest;
 import barbershopAPI.barbershopAPI.dto.AuthDTOs.LoginResponse;
