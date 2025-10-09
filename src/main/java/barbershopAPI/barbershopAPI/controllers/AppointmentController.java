@@ -45,6 +45,7 @@ public class AppointmentController {
                 a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes());
     }
 
+
     @GetMapping
     public AppointmentResponse get(@PathVariable UUID id) {
         Appointment a = appointmentRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
