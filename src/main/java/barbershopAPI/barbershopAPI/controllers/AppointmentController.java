@@ -44,4 +44,11 @@ public class AppointmentController {
         return new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
                 a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes());
     }
+
+    @GetMapping
+    public AppointmentResponse get(@PathVariable UUID id) {
+        Appointment a = appointmentRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
+        return new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
+                a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes());
+    }
 }
