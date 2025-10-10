@@ -227,4 +227,37 @@ public class Mailer {
     private String escapeIcs(String s){
         return s.replace("\\","\\\\").replace("\n","\\n").replace(",","\\,").replace(";","\\;");
     }
+
+
+
+
+    // services/Mailer.java (adiciona este método)
+    public void sendEmailVerification(String to, String verifyLink){
+        try {
+            var mime = mailSender.createMimeMessage();
+            var helper = new MimeMessageHelper(mime, true, StandardCharsets.UTF_8.name());
+            helper.setFrom(new InternetAddress(fromEmail, fromName));
+            helper.setTo(to);
+            helper.setSubject("Confirma o teu email · Barbearia");
+
+            var html = """
+      <div style="font-family:Arial,Helvetica,sans-serif">
+        <h2>Confirma o teu email</h2>
+        <p>Para concluíres o registo, confirma o teu email clicando no botão:</p>
+        <p><a href="%1$s" style="background:#C3FF5A;color:#111;text-decoration:none;
+              padding:12px 18px;border-radius:10px;display:inline-block;font-weight:700">
+              Confirmar email</a></p>
+        <p style="color:#666">Se não fores tu, ignora esta mensagem.</p>
+      </div>
+    """.formatted(verifyLink);
+
+            helper.setText("Confirma o teu email: " + verifyLink, html);
+            mailSender.send(mime);
+        } catch (Exception ex) {
+            log.warn("Falha a enviar email de verificação para {}: {}", to, ex.getMessage(), ex);
+        }
+    }
+
+
+
 }

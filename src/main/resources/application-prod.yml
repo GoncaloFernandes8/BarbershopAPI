@@ -9,6 +9,8 @@ spring:
     password: ${MAIL_PASSWORD}
     MAIL_FROM_NAME: ${MAIL_FROM_NAME:Barbearia}
     FRONTEND_BASE_URL: ${FRONTEND_BASE_URL:https://example.com}
+    EMAIL_VERIFY_TOKEN_TTL_MIN: ${EMAIL_VERIFY_TOKEN_TTL_MIN:60}
+    EMAIL_VERIFY_RESEND_COOLDOWN_MIN: ${EMAIL_VERIFY_RESEND_COOLDOWN_MIN:10}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
