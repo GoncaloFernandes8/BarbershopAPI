@@ -1,20 +1,23 @@
 package barbershopAPI.barbershopAPI.services;
-
+import barbershopAPI.barbershopAPI.services.Mailer;
 import barbershopAPI.barbershopAPI.entities.*;
 import barbershopAPI.barbershopAPI.repositories.*;
 import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.AppointmentResponse;
 import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.CreateAppointmentRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AppointmentService {
 
+    private final Mailer mailer;
     private final AppointmentRepository appointmentRepo;
     private final BarberRepository barberRepo;
     private final ServiceRepository serviceRepo;
@@ -46,9 +49,15 @@ public class AppointmentService {
         try {
             appt = appointmentRepo.save(appt);
         } catch (DataIntegrityViolationException e) {
-            // fallback caso a constraint do DB dispare em corrida
             throw new SlotConflictException("Slot já ocupado para este barbeiro");
         }
+
+        try {
+            mailer.sendAppointmentConfirmation(client.getEmail(), appt, service, barber);
+        } catch (Exception ex) {
+            log.warn("Falha ao enviar email de confirmação para {} (appt {}).", client.getEmail(), appt.getId(), ex);
+        }
+
 
         return new AppointmentResponse(
                 appt.getId(),
