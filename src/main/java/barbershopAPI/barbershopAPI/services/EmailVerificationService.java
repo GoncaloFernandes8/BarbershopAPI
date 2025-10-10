@@ -43,6 +43,10 @@ public class EmailVerificationService {
         RNG.nextBytes(bytes);
         return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
     }
+    public boolean isUserVerified(Long userId){
+        // verificado se existir algum token usado por este user
+        return tokenRepo.existsByUserIdAndUsedAtIsNotNull(userId);
+    }
 
     private static String sha256(String s){
         try {
@@ -57,14 +61,13 @@ public class EmailVerificationService {
     @Transactional
     public void createAndSendToken(Long userId) {
         var user = clientRepo.findById(userId).orElseThrow();
-        if (user.getEmailVerifiedAt() != null) return;
 
-        // cooldown opcional: se existir token recente, não reenviar já
-        var now = OffsetDateTime.now(ZoneOffset.UTC);
-        // (podes procurar o último por userId; para simples, ignoramos aqui)
+        // se já verificado, não enviar
+        if (isUserVerified(userId)) return;
 
         String token = randomToken();
         String hash = sha256(token);
+        var now = OffsetDateTime.now(ZoneOffset.UTC);
 
         var t = EmailVerificationToken.builder()
                 .userId(userId)
@@ -82,15 +85,11 @@ public class EmailVerificationService {
     public boolean verify(String token){
         String hash = sha256(token);
         var t = tokenRepo.findByTokenHash(hash).orElseThrow(() -> new IllegalArgumentException("Token inválido"));
+
         if (t.getUsedAt() != null) throw new IllegalStateException("Token já usado");
         var now = OffsetDateTime.now(ZoneOffset.UTC);
         if (t.getExpiresAt().isBefore(now)) throw new IllegalStateException("Token expirado");
 
-        var user = clientRepo.findById(t.getUserId()).orElseThrow();
-        if (user.getEmailVerifiedAt() == null) {
-            user.setEmailVerifiedAt(now);
-            clientRepo.save(user);
-        }
         t.setUsedAt(now);
         tokenRepo.save(t);
         return true;
@@ -98,12 +97,14 @@ public class EmailVerificationService {
 
     @Transactional
     public void resend(String email){
-        Optional<Client> opt = clientRepo.findByEmailIgnoreCase(email);
-        if (opt.isEmpty()) return;               // não vazar se existe
+        var opt = clientRepo.findByEmailIgnoreCase(email);
+        if (opt.isEmpty()) return;              // não vazar se o email existe
         var user = opt.get();
-        if (user.getEmailVerifiedAt() != null) return; // já verificado, não enviar
 
-        // TODO: procurar último token por user e aplicar cooldown se quiseres
+        // se já estiver verificado (algum token usado), não reenviar
+        if (isUserVerified(user.getId())) return;
+
+        // gera novo token e envia
         createAndSendToken(user.getId());
     }
 }

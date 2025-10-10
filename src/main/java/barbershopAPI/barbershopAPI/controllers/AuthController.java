@@ -28,8 +28,7 @@ public class AuthController {
         c.setName(req.name());
         c.setPhone(req.phone());
         c.setEmail(req.email());
-        c.setPasswordHash(req.password()); // TROCA PARA HASH!
-        c.setEmailVerifiedAt(null);
+        c.setPassword(req.password()); // TROCA PARA HASHED
         c = clientRepo.save(c);
 
         emailVerification.createAndSendToken(c.getId());
@@ -66,7 +65,8 @@ public class AuthController {
         if (c == null /*|| !passwordMatches(...)*/) {
             return ResponseEntity.status(401).body(Map.of("message","Credenciais inválidas."));
         }
-        if (c.getEmailVerifiedAt() == null){
+        boolean verified = emailVerification.isUserVerified(c.getId());
+        if (!verified){
             return ResponseEntity.status(403).body(Map.of(
                     "code","EMAIL_NOT_VERIFIED",
                     "message","Confirma o teu email para entrar."

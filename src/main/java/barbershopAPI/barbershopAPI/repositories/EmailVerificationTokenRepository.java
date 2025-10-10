@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface EmailVerificationTokenRepository extends JpaRepository<EmailVerificationToken, UUID> {
     Optional<EmailVerificationToken> findByTokenHash(String tokenHash);
+    boolean existsByUserIdAndUsedAtIsNotNull(Long userId); // 👈 para saber se já verificou
 }
