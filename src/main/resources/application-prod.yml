@@ -7,6 +7,8 @@ spring:
     port: ${MAIL_PORT:587}
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
+    MAIL_FROM_NAME: ${MAIL_FROM_NAME:Barbearia}
+    FRONTEND_BASE_URL: ${FRONTEND_BASE_URL:https://example.com}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
