@@ -36,7 +36,7 @@ public class Mailer {
     @Value("${MAIL_FROM_NAME:Barbearia}")
     String fromName;
 
-    @Value("${FRONTEND_BASE_URL:https://example.com}")
+    @Value("${FRONTEND_BASE_URL:http://localhost:4200}")
     String frontendBaseUrl;
 
     private static final ZoneId TZ = ZoneId.of("Europe/Lisbon");
