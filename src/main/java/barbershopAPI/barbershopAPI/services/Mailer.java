@@ -33,19 +33,22 @@ public class Mailer {
                 .format(DateTimeFormatter.ofPattern("EEEE, d 'de' MMMM 'às' HH:mm", new Locale("pt", "PT")));
 
         msg.setText("""
-      Olá,
+  Olá,
 
-      A tua marcação foi confirmada:
+  A tua marcação foi confirmada:
 
-      • Data e hora: %s
-      • Serviço: %s (%d min)
-      • Barbeiro: %s
-      • Nº da marcação: #%d
+  • Data e hora: %s
+  • Serviço: %s (%d min)
+  • Barbeiro: %s
+  • Nº da marcação: #%s
 
-      Até já!
-      """.formatted(
-                when, svc.getName(), svc.getDurationMin(),
-                barber.getName(), appt.getId()
+  Até já!
+  """.formatted(
+                when,                 // String
+                svc.getName(),        // String
+                svc.getDurationMin(), // int -> %d está ok
+                barber.getName(),     // String
+                appt.getId().toString() // UUID -> %s
         ));
 
         mailSender.send(msg);
