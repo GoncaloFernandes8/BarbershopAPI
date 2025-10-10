@@ -58,23 +58,29 @@ public class AuthController {
         return ResponseEntity.noContent().build();
     }
 
-    // === Login (exemplo: bloquear se não verificado) ===
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest req){
         var c = clientRepo.findByEmailIgnoreCase(req.email()).orElse(null);
-        if (c == null /*|| !passwordMatches(...)*/) {
+        if (c == null /* || !passwordMatches(...) */) {
             return ResponseEntity.status(401).body(Map.of("message","Credenciais inválidas."));
         }
+
+        // apenas verifica estado; NÃO envia email aqui
         boolean verified = emailVerification.isUserVerified(c.getId());
         if (!verified){
             return ResponseEntity.status(403).body(Map.of(
                     "code","EMAIL_NOT_VERIFIED",
-                    "message","Confirma o teu email para entrar."
+                    "message","Confirma o teu email para entrar. Se precisares, pede o reenvio."
             ));
         }
-        // ...gera token JWT como já fazes
-        return ResponseEntity.ok(Map.of("token","<jwt>","user", Map.of("id", c.getId(), "name", c.getName(), "email", c.getEmail())));
+
+        // ...gera token/JWT como já fazes
+        return ResponseEntity.ok(Map.of(
+                "token","<jwt>",
+                "user", Map.of("id", c.getId(), "name", c.getName(), "email", c.getEmail())
+        ));
     }
+
 
     // DTOs (podes pôr em ficheiros próprios)
     public record RegisterRequest(@NotBlank String name, @NotBlank String phone, @Email String email, @NotBlank String password){}
