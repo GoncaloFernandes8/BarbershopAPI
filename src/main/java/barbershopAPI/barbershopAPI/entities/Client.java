@@ -16,17 +16,18 @@ public class Client {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
-    private String phone;
-
-    @Column(unique = true)
+    @Column(length = 255, unique = true) // email
     private String email;
 
-    @Column(nullable = false)
+    @Column(length = 72) // ou omite length; para TEXT não metas length
     private String password;
+
+    @Column(length = 100)
+    private String name;
+
+    @Column(length = 20)
+    private String phone;
+
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
