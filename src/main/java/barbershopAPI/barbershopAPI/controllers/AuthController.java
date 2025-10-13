@@ -1,9 +1,7 @@
 // controllers/AuthController.java
 package barbershopAPI.barbershopAPI.controllers;
 
-import barbershopAPI.barbershopAPI.entities.Client;
 import barbershopAPI.barbershopAPI.repositories.ClientRepository;
-import barbershopAPI.barbershopAPI.services.EmailVerificationService;
 import barbershopAPI.barbershopAPI.services.RegistrationService;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.OffsetDateTime;
 import java.util.Map;
 
 @RestController
@@ -20,7 +17,6 @@ import java.util.Map;
 public class AuthController {
     private final ClientRepository clientRepo;
     private final RegistrationService registrationService;
-    private final EmailVerificationService emailVerification;
 
     public record RegisterResponse(boolean sent){}
     @PostMapping("/register")
@@ -42,12 +38,6 @@ public class AuthController {
         }
     }
 
-    // === Reenviar ===
-    @PostMapping("/verify/resend")
-    public ResponseEntity<?> resend(@RequestBody ResendRequest req){
-        emailVerification.resend(req.email());
-        return ResponseEntity.noContent().build();
-    }
 
     // LOGIN agora é clássico: procurar pelo email e validar password. Sem verificação aqui.
     public record LoginRequest(String email, String password){}

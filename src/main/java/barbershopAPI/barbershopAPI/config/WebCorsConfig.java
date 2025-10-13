@@ -9,7 +9,7 @@ public class WebCorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:4200" /*, "https://<teu-frontend>.koyeb.app"*/)
+                .allowedOrigins("https://barbershop-frontend-nine.vercel.app/")
                 .allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
                 .allowedHeaders("*")
                 .exposedHeaders("Location")
