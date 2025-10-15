@@ -33,15 +33,16 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-  mvc:
-    cors:
-      mappings:
-        "[/**]":
-          allowed-origin-patterns:
-            - "http://localhost:4200"
-            - "https://barbershop-frontend-nine.vercel.app"
-          allowed-methods: [ GET, POST, PUT, PATCH, DELETE, OPTIONS ]
-          allowed-headers: "*"
-          exposed-headers: [ "Location" ]
-          allow-credentials: true
-          max-age: 3600
+  spring:
+    mvc:
+      cors:
+        mappings:
+          "[/**]":
+            allowed-origin-patterns:
+              - "http://localhost:4200"
+              - "https://*.vercel.app"              # cobre previews e o domínio fixo
+            allowed-methods: [ GET, POST, PUT, PATCH, DELETE, OPTIONS ]
+            allowed-headers: "*"                    # inclui Authorization, Content-Type, etc.
+            exposed-headers: [ "Location" ]
+            allow-credentials: true                 # se usares cookies/Authorization
+            max-age: 3600
