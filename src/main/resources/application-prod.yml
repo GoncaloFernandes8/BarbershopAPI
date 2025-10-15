@@ -40,7 +40,7 @@ spring:
           "[/**]":
             allowed-origin-patterns:
               - "http://localhost:4200"
-              - "https://*.vercel.app"              # cobre previews e o domínio fixo
+              - "https://barbershop-frontend-nine.vercel.app/"              # cobre previews e o domínio fixo
             allowed-methods: [ GET, POST, PUT, PATCH, DELETE, OPTIONS ]
             allowed-headers: "*"                    # inclui Authorization, Content-Type, etc.
             exposed-headers: [ "Location" ]
