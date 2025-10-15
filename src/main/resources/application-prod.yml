@@ -37,12 +37,11 @@ spring:
     cors:
       mappings:
         "[/**]":
-          allowed-origins:
+          allowed-origin-patterns:
             - "http://localhost:4200"
-            # adiciona o domínio do teu frontend em prod, se existir
-            # - "https://<o_teu_frontend>.koyeb.app"
-          allowed-methods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]
+            - "https://barbershop-frontend-nine.vercel.app"
+          allowed-methods: [ GET, POST, PUT, PATCH, DELETE, OPTIONS ]
           allowed-headers: "*"
-          exposed-headers: ["Location"]
+          exposed-headers: [ "Location" ]
           allow-credentials: true
           max-age: 3600
