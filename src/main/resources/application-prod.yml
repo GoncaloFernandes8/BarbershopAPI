@@ -33,16 +33,3 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-  spring:
-    mvc:
-      cors:
-        mappings:
-          "[/**]":
-            allowed-origin-patterns:
-              - "http://localhost:4200"
-              - "https://barbershop-frontend-nine.vercel.app/"              # cobre previews e o domínio fixo
-            allowed-methods: [ GET, POST, PUT, PATCH, DELETE, OPTIONS ]
-            allowed-headers: "*"                    # inclui Authorization, Content-Type, etc.
-            exposed-headers: [ "Location" ]
-            allow-credentials: true                 # se usares cookies/Authorization
-            max-age: 3600
