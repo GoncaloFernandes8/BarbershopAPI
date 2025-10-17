@@ -1,5 +1,4 @@
-server:
-  port: ${PORT:8000}
+# Port configuration is handled in application.properties
 
 spring:
   mail:
