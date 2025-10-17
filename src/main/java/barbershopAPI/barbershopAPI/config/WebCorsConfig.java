@@ -9,10 +9,14 @@ public class WebCorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOriginPatterns("https://barbershop-frontend-nine.vercel.app", "http://localhost:4200")
-                .allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
+                .allowedOriginPatterns(
+                    "https://barbershop-frontend-nine.vercel.app",
+                    "http://localhost:4200",
+                    "https://*.vercel.app"
+                )
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD")
                 .allowedHeaders("*")
-                .exposedHeaders("Location")
+                .exposedHeaders("Location", "Authorization")
                 .allowCredentials(true)
                 .maxAge(3600);
     }

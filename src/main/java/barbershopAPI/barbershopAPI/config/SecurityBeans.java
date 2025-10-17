@@ -31,9 +31,12 @@ public class SecurityBeans {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.and()) // Enable CORS
                 .authorizeHttpRequests(auth -> auth
                         // Public endpoints
                         .requestMatchers("/auth/**", "/availability/**", "/services", "/barbers", "/health").permitAll()
+                        // Allow OPTIONS requests for CORS preflight
+                        .requestMatchers("OPTIONS", "/**").permitAll()
                         // Admin endpoints (protected)
                         .requestMatchers("/appointments/**", "/working-hours/**", "/time-off/**").authenticated()
                         .requestMatchers("/clients/**").authenticated()
