@@ -2,8 +2,6 @@
 package barbershopAPI.barbershopAPI.services;
 
 import jakarta.activation.DataSource;
-import jakarta.activation.FileTypeMap;
-import jakarta.activation.MimetypesFileTypeMap;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.util.ByteArrayDataSource;
 import lombok.RequiredArgsConstructor;

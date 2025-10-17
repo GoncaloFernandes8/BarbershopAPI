@@ -63,7 +63,7 @@ Google Maps embebido
 
 Backend
 
-Spring Boot 3 (Web, Validation)
+Spring Boot 3 (Web, Validation, Security, Actuator)
 
 Spring Data JPA / Hibernate
 
@@ -71,9 +71,9 @@ PostgreSQL (Neon) + HikariCP
 
 CORS configurável via application-prod.yml
 
-Autenticação básica/JWT (esqueleto), verificação de registo por email SMTP
+Autenticação JWT completa, verificação de registo por email SMTP
 
-Flyway opcional (não incluído neste repo)
+Flyway para migrações de base de dados (incluído)
 
 Infra
 
@@ -237,5 +237,45 @@ Clients GET/POST/PUT/DELETE /clients[/id]
 
 DTOs/entities included in the project; 404 errors → ResourceNotFoundException.
 
+## 🔧 Environment Variables
+
+To run the application, configure the following variables:
+
+### Database
+- `DB_URL`: PostgreSQL connection URL
+- `DB_USER`: Database user  
+- `DB_PASSWORD`: Database password
+
+### Email (SMTP)
+- `MAIL_HOST`: SMTP server (e.g. smtp.gmail.com)
+- `MAIL_PORT`: SMTP port (e.g. 587)
+- `MAIL_USERNAME`: Email for SMTP authentication
+- `MAIL_PASSWORD`: Email password
+- `MAIL_FROM`: Sender email (e.g. no-reply@barbearia.com)
+- `MAIL_FROM_NAME`: Sender name (e.g. Barbearia)
+
+### URLs
+- `FRONTEND_BASE_URL`: Frontend URL (e.g. https://barbershop-frontend-nine.vercel.app)
+
+### JWT
+- `JWT_SECRET`: Secret key for signing JWT tokens (minimum 32 characters)
+- `JWT_EXPIRATION`: Token expiration in milliseconds (e.g. 86400000 = 24h)
+
+### Server
+- `PORT`: Server port (e.g. 8080)
+
+### Example for local development:
+```bash
+export DB_URL="jdbc:postgresql://localhost:5432/barbershop"
+export DB_USER="postgres"
+export DB_PASSWORD="password"
+export MAIL_HOST="smtp.gmail.com"
+export MAIL_USERNAME="your-email@gmail.com"
+export MAIL_PASSWORD="your-app-password"
+export MAIL_FROM="no-reply@barbearia.local"
+export FRONTEND_BASE_URL="http://localhost:4200"
+export JWT_SECRET="mySecretKey123456789012345678901234567890"
+export PORT="8080"
+```
 
 

@@ -7,16 +7,13 @@ spring:
     port: ${MAIL_PORT:587}
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
-    MAIL_FROM_NAME: ${MAIL_FROM_NAME:Barbearia}
-    FRONTEND_BASE_URL: ${FRONTEND_BASE_URL:https://barbershop-frontend-nine.vercel.app}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
-      mail.debug: true
+      mail.debug: false
       mail.smtp.connectiontimeout: 5000
       mail.smtp.timeout: 5000
       mail.smtp.writetimeout: 5000
-  MAIL_FROM: ${MAIL_FROM:no-reply@barbearia.example}
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}
@@ -33,3 +30,18 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# Properties that the code expects at root level
+MAIL_FROM: ${MAIL_FROM:no-reply@barbearia.example}
+MAIL_FROM_NAME: ${MAIL_FROM_NAME:Barbearia}
+FRONTEND_BASE_URL: ${FRONTEND_BASE_URL:https://barbershop-frontend-nine.vercel.app}
+
+# Actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized

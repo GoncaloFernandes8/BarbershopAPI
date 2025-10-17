@@ -1,0 +1,3 @@
+ALTER TABLE client ADD COLUMN email VARCHAR(120);
+ALTER TABLE client ADD COLUMN password VARCHAR(20);
+

@@ -1,5 +1,10 @@
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/BarbershopApiApplication.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/config/AsyncConfig.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/config/JwtAuthenticationFilter.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/config/SecurityBeans.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/config/WebCorsConfig.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/controllers/AppointmentController.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/controllers/AuthController.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/controllers/AvailabilityController.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/controllers/BarberController.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/controllers/ClientController.java
@@ -10,6 +15,9 @@
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/controllers/WorkingHoursController.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/AppointmentDTOs/AppointmentResponse.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/AppointmentDTOs/CreateAppointmentRequest.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/AuthDTOs/AuthUserDto.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/AuthDTOs/LoginRequest.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/AuthDTOs/LoginResponse.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/BarberDTOs/BarberCreateRequest.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/BarberDTOs/BarberResponse.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/BarberDTOs/BarberUpdateRequest.java
@@ -26,6 +34,7 @@
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/entities/Appointment.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/entities/Barber.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/entities/Client.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/entities/RegistrationToken.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/entities/ServiceEntity.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/entities/TimeOff.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/entities/WorkingHours.java
@@ -33,10 +42,16 @@
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/repositories/AppointmentRepository.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/repositories/BarberRepository.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/repositories/ClientRepository.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/repositories/RegistrationTokenRepository.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/repositories/ServiceRepository.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/repositories/TimeOffRepository.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/repositories/WorkingHoursRepository.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/AppointmentService.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/Auth/AuthService.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/AvailabilityService.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/ClientUserDetailsService.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/JwtService.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/Mailer.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/RegistrationService.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/utils/ResourceNotFoundException.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/utils/Translators/DayOfWeekConverter.java

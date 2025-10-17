@@ -1,5 +1,4 @@
 package barbershopAPI.barbershopAPI.services;
-import barbershopAPI.barbershopAPI.services.Mailer;
 import barbershopAPI.barbershopAPI.entities.*;
 import barbershopAPI.barbershopAPI.repositories.*;
 import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.AppointmentResponse;

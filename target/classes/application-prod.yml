@@ -2,13 +2,46 @@ server:
   port: ${PORT:8080}
 
 spring:
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.debug: false
+      mail.smtp.connectiontimeout: 5000
+      mail.smtp.timeout: 5000
+      mail.smtp.writetimeout: 5000
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 0
+      idle-timeout: 600000
+      connection-timeout: 30000
+      connection-init-sql: "SET TIME ZONE 'Europe/Lisbon'"
   jpa:
     hibernate:
       ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# Properties that the code expects at root level
+MAIL_FROM: ${MAIL_FROM:no-reply@barbearia.example}
+MAIL_FROM_NAME: ${MAIL_FROM_NAME:Barbearia}
+FRONTEND_BASE_URL: ${FRONTEND_BASE_URL:https://barbershop-frontend-nine.vercel.app}
+
+# Actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
