@@ -57,14 +57,31 @@ public class AppointmentController {
 
     @GetMapping("/my")
     public List<AppointmentResponse> getMyAppointments(@RequestHeader("Authorization") String authHeader) {
-        // Extrair clientId do token JWT
-        String token = authHeader.substring(7); // Remove "Bearer "
-        String clientIdStr = jwtService.extractUsername(token);
-        Long clientId = Long.valueOf(clientIdStr);
-        
-        return appointmentRepo.findAllByClientIdOrderByStartsAtDesc(clientId).stream()
-                .map(a -> new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
-                        a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes()))
-                .toList();
+        try {
+            // Validar header de autorização
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                throw new RuntimeException("Header Authorization inválido");
+            }
+            
+            // Extrair clientId do token JWT
+            String token = authHeader.substring(7); // Remove "Bearer "
+            
+            // Validar token
+            if (!jwtService.validateToken(token)) {
+                throw new RuntimeException("Token JWT inválido ou expirado");
+            }
+            
+            String clientIdStr = jwtService.extractUsername(token);
+            Long clientId = Long.valueOf(clientIdStr);
+            
+            return appointmentRepo.findAllByClientIdOrderByStartsAtDesc(clientId).stream()
+                    .map(a -> new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
+                            a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes()))
+                    .toList();
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Erro ao converter clientId: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao processar token JWT: " + e.getMessage(), e);
+        }
     }
 }
