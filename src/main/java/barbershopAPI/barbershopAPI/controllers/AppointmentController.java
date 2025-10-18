@@ -85,6 +85,12 @@ public class AppointmentController {
         } catch (Exception e) {
             System.out.println("Erro no endpoint /my: " + e.getMessage());
             e.printStackTrace();
+            
+            // Se for token expirado, retornar 401 em vez de 500
+            if (e.getMessage().contains("JWT expired")) {
+                throw new org.springframework.security.authentication.BadCredentialsException("Token expirado");
+            }
+            
             throw new RuntimeException("Erro ao processar token JWT: " + e.getMessage(), e);
         }
     }
