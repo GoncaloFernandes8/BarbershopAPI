@@ -58,35 +58,33 @@ public class AppointmentController {
     @GetMapping("/my")
     public List<AppointmentResponse> getMyAppointments(@RequestHeader("Authorization") String authHeader) {
         try {
+            // Debug: log do header recebido
+            System.out.println("Header Authorization recebido: " + authHeader);
+            
             // Validar header de autorização
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                System.out.println("Header Authorization inválido");
                 throw new RuntimeException("Header Authorization inválido");
             }
             
-            // Extrair clientId do token JWT
+            // Extrair token
             String token = authHeader.substring(7); // Remove "Bearer "
+            System.out.println("Token extraído: " + token.substring(0, Math.min(20, token.length())) + "...");
             
-            // Validar token
-            if (!jwtService.validateToken(token)) {
-                throw new RuntimeException("Token JWT inválido ou expirado");
-            }
-            
+            // Testar extração do username
             String clientIdStr = jwtService.extractUsername(token);
-            Long clientId = Long.valueOf(clientIdStr);
+            System.out.println("ClientId extraído: " + clientIdStr);
             
-            // Por enquanto, retornar lista vazia para testar se o problema é na consulta
+            // Testar conversão
+            Long clientId = Long.valueOf(clientIdStr);
+            System.out.println("ClientId convertido: " + clientId);
+            
+            // Retornar lista vazia para testar
             return List.of();
             
-            // Código original comentado para debug:
-            /*
-            return appointmentRepo.findAllByClientIdOrderByStartsAtDesc(clientId).stream()
-                    .map(a -> new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
-                            a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes()))
-                    .toList();
-            */
-        } catch (NumberFormatException e) {
-            throw new RuntimeException("Erro ao converter clientId: " + e.getMessage(), e);
         } catch (Exception e) {
+            System.out.println("Erro no endpoint /my: " + e.getMessage());
+            e.printStackTrace();
             throw new RuntimeException("Erro ao processar token JWT: " + e.getMessage(), e);
         }
     }
