@@ -84,4 +84,10 @@ public class AppointmentController {
             throw new RuntimeException("Erro ao processar token JWT: " + e.getMessage(), e);
         }
     }
+
+    // Endpoint temporário para debug - remover depois
+    @GetMapping("/debug")
+    public String debug() {
+        return "Endpoint funcionando - " + new java.util.Date();
+    }
 }
