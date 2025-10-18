@@ -58,39 +58,37 @@ public class AppointmentController {
     @GetMapping("/my")
     public List<AppointmentResponse> getMyAppointments(@RequestHeader("Authorization") String authHeader) {
         try {
-            // Debug: log do header recebido
-            System.out.println("Header Authorization recebido: " + authHeader);
-            
             // Validar header de autorização
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                System.out.println("Header Authorization inválido");
-                throw new RuntimeException("Header Authorization inválido");
+                throw new org.springframework.security.authentication.BadCredentialsException("Header Authorization inválido");
             }
             
-            // Extrair token
+            // Extrair clientId do token JWT
             String token = authHeader.substring(7); // Remove "Bearer "
-            System.out.println("Token extraído: " + token.substring(0, Math.min(20, token.length())) + "...");
             
-            // Testar extração do username
+            // Validar token
+            if (!jwtService.validateToken(token)) {
+                throw new org.springframework.security.authentication.BadCredentialsException("Token JWT inválido ou expirado");
+            }
+            
             String clientIdStr = jwtService.extractUsername(token);
-            System.out.println("ClientId extraído: " + clientIdStr);
-            
-            // Testar conversão
             Long clientId = Long.valueOf(clientIdStr);
-            System.out.println("ClientId convertido: " + clientId);
             
-            // Retornar lista vazia para testar
-            return List.of();
-            
+            return appointmentRepo.findAllByClientIdOrderByStartsAtDesc(clientId).stream()
+                    .map(a -> new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
+                            a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes()))
+                    .toList();
+                    
+        } catch (NumberFormatException e) {
+            throw new org.springframework.security.authentication.BadCredentialsException("Erro ao converter clientId: " + e.getMessage());
+        } catch (org.springframework.security.authentication.BadCredentialsException e) {
+            // Re-throw BadCredentialsException as is
+            throw e;
         } catch (Exception e) {
-            System.out.println("Erro no endpoint /my: " + e.getMessage());
-            e.printStackTrace();
-            
             // Se for token expirado, retornar 401 em vez de 500
             if (e.getMessage().contains("JWT expired")) {
                 throw new org.springframework.security.authentication.BadCredentialsException("Token expirado");
             }
-            
             throw new RuntimeException("Erro ao processar token JWT: " + e.getMessage(), e);
         }
     }
