@@ -74,10 +74,16 @@ public class AppointmentController {
             String clientIdStr = jwtService.extractUsername(token);
             Long clientId = Long.valueOf(clientIdStr);
             
+            // Por enquanto, retornar lista vazia para testar se o problema é na consulta
+            return List.of();
+            
+            // Código original comentado para debug:
+            /*
             return appointmentRepo.findAllByClientIdOrderByStartsAtDesc(clientId).stream()
                     .map(a -> new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
                             a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes()))
                     .toList();
+            */
         } catch (NumberFormatException e) {
             throw new RuntimeException("Erro ao converter clientId: " + e.getMessage(), e);
         } catch (Exception e) {
