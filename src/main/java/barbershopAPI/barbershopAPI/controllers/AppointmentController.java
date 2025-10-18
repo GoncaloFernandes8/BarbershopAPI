@@ -102,7 +102,7 @@ public class AppointmentController {
     public List<AppointmentResponse> testData() {
         return List.of(
             new AppointmentResponse(
-                java.util.UUID.randomUUID(),
+                java.util.UUID.fromString("123e4567-e89b-12d3-a456-426614174000"), // UUID fixo válido
                 1L, // barberId
                 1L, // serviceId
                 1L, // clientId
