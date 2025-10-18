@@ -96,4 +96,21 @@ public class AppointmentController {
     public String debug() {
         return "Endpoint funcionando - " + new java.util.Date();
     }
+
+    // Endpoint para testar dados mockados
+    @GetMapping("/test")
+    public List<AppointmentResponse> testData() {
+        return List.of(
+            new AppointmentResponse(
+                java.util.UUID.randomUUID(),
+                1L, // barberId
+                1L, // serviceId
+                1L, // clientId
+                java.time.OffsetDateTime.now(),
+                java.time.OffsetDateTime.now().plusHours(1),
+                "CONFIRMED",
+                "Teste de dados"
+            )
+        );
+    }
 }
