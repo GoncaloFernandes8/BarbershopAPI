@@ -6,6 +6,7 @@ import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.CreateAppointmentRequest;
 import barbershopAPI.barbershopAPI.enums.AppointmentStatus;
 import barbershopAPI.barbershopAPI.entities.Appointment;
 import barbershopAPI.barbershopAPI.repositories.AppointmentRepository;
+import barbershopAPI.barbershopAPI.repositories.ClientRepository;
 import barbershopAPI.barbershopAPI.services.AppointmentService;
 import barbershopAPI.barbershopAPI.services.JwtService;
 import barbershopAPI.barbershopAPI.utils.ResourceNotFoundException;
@@ -21,6 +22,7 @@ public class AppointmentController {
     private final AppointmentService appointmentService;
     private final AppointmentRepository appointmentRepo;
     private final JwtService jwtService;
+    private final ClientRepository clientRepo;
 
     @PostMapping
     public AppointmentResponse create(@Valid @RequestBody CreateAppointmentRequest req) {
@@ -80,11 +82,18 @@ public class AppointmentController {
                 throw new org.springframework.security.authentication.BadCredentialsException("Token JWT inválido ou expirado");
             }
             
-            String clientIdStr = jwtService.extractUsername(token);
-            System.out.println("ClientId extraído: " + clientIdStr);
+            String email = jwtService.extractUsername(token);
+            System.out.println("Email extraído: " + email);
             
-            Long clientId = Long.valueOf(clientIdStr);
-            System.out.println("ClientId convertido: " + clientId);
+            // Buscar cliente pelo email
+            var client = clientRepo.findByEmailIgnoreCase(email).orElse(null);
+            if (client == null) {
+                System.out.println("ERRO: Cliente não encontrado para email: " + email);
+                throw new org.springframework.security.authentication.BadCredentialsException("Cliente não encontrado");
+            }
+            
+            Long clientId = client.getId();
+            System.out.println("ClientId encontrado: " + clientId);
             
             List<Appointment> appointments = appointmentRepo.findAllByClientIdOrderByStartsAtDesc(clientId);
             System.out.println("Appointments encontrados: " + appointments.size());
