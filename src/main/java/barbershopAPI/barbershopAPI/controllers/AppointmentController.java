@@ -7,6 +7,7 @@ import barbershopAPI.barbershopAPI.enums.AppointmentStatus;
 import barbershopAPI.barbershopAPI.entities.Appointment;
 import barbershopAPI.barbershopAPI.repositories.AppointmentRepository;
 import barbershopAPI.barbershopAPI.services.AppointmentService;
+import barbershopAPI.barbershopAPI.services.JwtService;
 import barbershopAPI.barbershopAPI.utils.ResourceNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class AppointmentController {
     private final AppointmentService appointmentService;
     private final AppointmentRepository appointmentRepo;
+    private final JwtService jwtService;
 
     @PostMapping
     public AppointmentResponse create(@Valid @RequestBody CreateAppointmentRequest req) {
@@ -51,5 +53,18 @@ public class AppointmentController {
         Appointment a = appointmentRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
         return new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
                 a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes());
+    }
+
+    @GetMapping("/my")
+    public List<AppointmentResponse> getMyAppointments(@RequestHeader("Authorization") String authHeader) {
+        // Extrair clientId do token JWT
+        String token = authHeader.substring(7); // Remove "Bearer "
+        String clientIdStr = jwtService.extractUsername(token);
+        Long clientId = Long.valueOf(clientIdStr);
+        
+        return appointmentRepo.findAllByClientIdOrderByStartsAtDesc(clientId).stream()
+                .map(a -> new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
+                        a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes()))
+                .toList();
     }
 }
