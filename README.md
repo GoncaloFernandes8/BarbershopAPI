@@ -1,17 +1,17 @@
 # 🪒 Barbershop API
 
-API REST para sistema de agendamento de barbearia desenvolvida em Spring Boot.
+API REST para sistema de marcação de barbearia desenvolvida em Spring Boot.
 
 ## 📋 Funcionalidades
 
-- **Gestão de Usuários**: Registro, login e autenticação JWT
+- **Gestão de Utilizadores**: Registo, login e autenticação JWT
 - **Gestão de Serviços**: CRUD de serviços (corte, barba, etc.)
 - **Gestão de Barbeiros**: CRUD de barbeiros disponíveis
-- **Sistema de Agendamentos**: 
+- **Sistema de Marcações**: 
   - Criação de marcações
   - Consulta de disponibilidade
   - Gestão de horários
-- **Histórico**: Consulta de agendamentos por usuário
+- **Histórico**: Consulta de marcações por utilizador
 - **Autenticação JWT**: Sistema seguro de autenticação
 
 ## 🛠️ Tecnologias
@@ -21,8 +21,8 @@ API REST para sistema de agendamento de barbearia desenvolvida em Spring Boot.
 - **Spring Security** - Autenticação e autorização
 - **JWT** - Tokens de autenticação
 - **Spring Data JPA** - Persistência de dados
-- **H2 Database** - Banco de dados em memória (desenvolvimento)
-- **Maven** - Gerenciamento de dependências
+- **H2 Database** - Base de dados em memória (desenvolvimento)
+- **Maven** - Gestão de dependências
 
 ## 🚀 Como Executar
 
@@ -53,7 +53,7 @@ java -jar target/barbershop-api.jar
 ## 📡 Endpoints Principais
 
 ### Autenticação
-- `POST /api/auth/register` - Registro de usuário
+- `POST /api/auth/register` - Registo de utilizador
 - `POST /api/auth/login` - Login
 - `POST /api/auth/logout` - Logout
 
@@ -65,11 +65,11 @@ java -jar target/barbershop-api.jar
 - `GET /api/barbers` - Listar barbeiros
 - `POST /api/barbers` - Criar barbeiro (admin)
 
-### Agendamentos
-- `GET /api/appointments` - Listar agendamentos do usuário
-- `POST /api/appointments` - Criar agendamento
-- `PUT /api/appointments/{id}` - Atualizar agendamento
-- `DELETE /api/appointments/{id}` - Cancelar agendamento
+### Marcações
+- `GET /api/appointments` - Listar marcações do utilizador
+- `POST /api/appointments` - Criar marcação
+- `PUT /api/appointments/{id}` - Atualizar marcação
+- `DELETE /api/appointments/{id}` - Cancelar marcação
 
 ## 🔐 Autenticação
 
@@ -78,7 +78,7 @@ A API utiliza JWT (JSON Web Tokens) para autenticação. Inclua o token no heade
 Authorization: Bearer <seu-token>
 ```
 
-## 🗄️ Banco de Dados
+## 🗄️ Base de Dados
 
 - **Desenvolvimento**: H2 Database (memória)
 - **Produção**: Configurável (MySQL, PostgreSQL, etc.)
@@ -104,7 +104,7 @@ src/main/java/
 # Porta da aplicação
 server.port=8080
 
-# Banco de dados H2
+# Base de dados H2
 spring.datasource.url=jdbc:h2:mem:barbershop
 spring.h2.console.enabled=true
 
