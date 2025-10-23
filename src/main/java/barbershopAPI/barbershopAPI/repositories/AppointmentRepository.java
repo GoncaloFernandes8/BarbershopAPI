@@ -22,4 +22,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
 
     List<Appointment> findAllByClientIdOrderByStartsAtDesc(Long clientId);
 
+    // Para o scheduler de lembretes
+    List<Appointment> findAllByIsActiveTrueAndStartsAtBetween(
+            OffsetDateTime startWindow, OffsetDateTime endWindow);
+    
+    List<Appointment> findAllByStartsAtBefore(OffsetDateTime cutoffTime);
+
 }
