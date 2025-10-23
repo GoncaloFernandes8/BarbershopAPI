@@ -3,6 +3,8 @@ package barbershopAPI.barbershopAPI.controllers;
 
 import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.AppointmentResponse;
 import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.CreateAppointmentRequest;
+import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.UpdateAppointmentRequest;
+import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.UpdateStatusRequest;
 import barbershopAPI.barbershopAPI.enums.AppointmentStatus;
 import barbershopAPI.barbershopAPI.entities.Appointment;
 import barbershopAPI.barbershopAPI.repositories.AppointmentRepository;
@@ -49,12 +51,38 @@ public class AppointmentController {
                 a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes());
     }
 
+    @PatchMapping("/{id}/status")
+    public AppointmentResponse updateStatus(@PathVariable UUID id, @Valid @RequestBody UpdateStatusRequest req) {
+        Appointment a = appointmentRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
+        
+        try {
+            AppointmentStatus newStatus = AppointmentStatus.valueOf(req.status().toUpperCase());
+            a.setStatus(newStatus);
+            
+            // Se cancelar, desativar
+            if (newStatus == AppointmentStatus.CANCELLED) {
+                a.setActive(false);
+            }
+            
+            a = appointmentRepo.save(a);
+            return new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
+                    a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid status. Valid values: PENDING, CONFIRMED, CANCELLED, COMPLETED, NO_SHOW");
+        }
+    }
+
 
     @GetMapping("/{id}")
     public AppointmentResponse get(@PathVariable UUID id) {
         Appointment a = appointmentRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
         return new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
                 a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes());
+    }
+
+    @PutMapping("/{id}")
+    public AppointmentResponse update(@PathVariable UUID id, @Valid @RequestBody UpdateAppointmentRequest req) {
+        return appointmentService.update(id, req);
     }
 
     @GetMapping("/my")

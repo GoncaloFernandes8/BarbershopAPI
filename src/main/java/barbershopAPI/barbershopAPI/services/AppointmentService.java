@@ -3,6 +3,8 @@ import barbershopAPI.barbershopAPI.entities.*;
 import barbershopAPI.barbershopAPI.repositories.*;
 import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.AppointmentResponse;
 import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.CreateAppointmentRequest;
+import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.UpdateAppointmentRequest;
+import barbershopAPI.barbershopAPI.utils.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -63,6 +65,94 @@ public class AppointmentService {
                 barber.getId(),
                 service.getId(),
                 client.getId(),
+                appt.getStartsAt(),
+                appt.getEndsAt(),
+                appt.getStatus().name(),
+                appt.getNotes()
+        );
+    }
+
+    @Transactional
+    public AppointmentResponse update(java.util.UUID id, UpdateAppointmentRequest req) {
+        var appt = appointmentRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
+
+        // Se o appointment já foi cancelado, não permitir edição
+        if (appt.getStatus() == barbershopAPI.barbershopAPI.enums.AppointmentStatus.CANCELLED) {
+            throw new IllegalStateException("Cannot update a cancelled appointment");
+        }
+
+        boolean changed = false;
+
+        // Atualizar barbeiro se fornecido
+        if (req.barberId() != null && !req.barberId().equals(appt.getBarber().getId())) {
+            var barber = barberRepo.findById(req.barberId()).orElseThrow();
+            appt.setBarber(barber);
+            changed = true;
+        }
+
+        // Atualizar serviço se fornecido
+        ServiceEntity service = appt.getService();
+        if (req.serviceId() != null && !req.serviceId().equals(service.getId())) {
+            service = serviceRepo.findById(req.serviceId()).orElseThrow();
+            appt.setService(service);
+            changed = true;
+        }
+
+        // Atualizar cliente se fornecido
+        if (req.clientId() != null && !req.clientId().equals(appt.getClient().getId())) {
+            var client = clientRepo.findById(req.clientId()).orElseThrow();
+            appt.setClient(client);
+            changed = true;
+        }
+
+        // Atualizar data/hora se fornecido
+        if (req.startsAt() != null && !req.startsAt().equals(appt.getStartsAt())) {
+            int mins = service.getDurationMin() + (service.getBufferAfterMin() == null ? 0 : service.getBufferAfterMin());
+            OffsetDateTime newStartsAt = req.startsAt();
+            OffsetDateTime newEndsAt = newStartsAt.plusMinutes(mins);
+
+            // Verificar conflito (excluindo o próprio appointment)
+            boolean busy = appointmentRepo.existsByBarberIdAndIsActiveTrueAndStartsAtLessThanAndEndsAtGreaterThan(
+                    appt.getBarber().getId(), newStartsAt, newEndsAt);
+            
+            if (busy) {
+                // Verificar se o conflito não é com o próprio appointment
+                var conflicting = appointmentRepo.findAllByBarberIdAndIsActiveTrueAndStartsAtLessThanAndEndsAtGreaterThan(
+                        appt.getBarber().getId(), newEndsAt, newStartsAt);
+                
+                boolean hasRealConflict = conflicting.stream()
+                        .anyMatch(a -> !a.getId().equals(id));
+                
+                if (hasRealConflict) {
+                    throw new SlotConflictException("Slot já ocupado para este barbeiro");
+                }
+            }
+
+            appt.setStartsAt(newStartsAt);
+            appt.setEndsAt(newEndsAt);
+            changed = true;
+        }
+
+        // Atualizar notas se fornecido (mesmo que seja vazio)
+        if (req.notes() != null && !req.notes().equals(appt.getNotes())) {
+            appt.setNotes(req.notes());
+            changed = true;
+        }
+
+        if (changed) {
+            try {
+                appt = appointmentRepo.save(appt);
+            } catch (DataIntegrityViolationException e) {
+                throw new SlotConflictException("Slot já ocupado para este barbeiro");
+            }
+        }
+
+        return new AppointmentResponse(
+                appt.getId(),
+                appt.getBarber().getId(),
+                appt.getService().getId(),
+                appt.getClient().getId(),
                 appt.getStartsAt(),
                 appt.getEndsAt(),
                 appt.getStatus().name(),
