@@ -13,18 +13,29 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>barbershopAPI</name>
 	<description>Barbershop project with Spring Boot</description>
-	<url/>
+	<url>https://github.com/GoncaloFernandes8/BarbershopAPI</url>
 	<licenses>
-		<license/>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/licenses/MIT</url>
+		</license>
 	</licenses>
 	<developers>
-		<developer/>
+		<developer>
+			<id>goncalofernandes8</id>
+			<name>Gonçalo Fernandes</name>
+			<email>goncalo8fernandes8@gmail.com</email>
+			<url>https://github.com/GoncaloFernandes8</url>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
 	</developers>
 	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
+		<connection>scm:git:git://github.com/GoncaloFernandes8/BarbershopAPI.git</connection>
+		<developerConnection>scm:git:ssh://github.com:GoncaloFernandes8/BarbershopAPI.git</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/GoncaloFernandes8/BarbershopAPI</url>
 	</scm>
 	<properties>
 		<java.version>17</java.version>

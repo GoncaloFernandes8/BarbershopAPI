@@ -275,11 +275,22 @@ PATCH /appointments/550e8400-e29b-41d4-a716-446655440000/status
 
 ---
 
-## 📄 Licença
+## 👨‍💻 Autor
 
-Projeto desenvolvido para fins educacionais e comerciais.
+**Gonçalo Fernandes**
+- GitHub: [@GoncaloFernandes8](https://github.com/GoncaloFernandes8)
+- LinkedIn: [Gonçalo Fernandes](https://www.linkedin.com/in/goncalo-fernandes88/)
+- Email: goncalo8fernandes8@gmail.com
 
 ---
 
-**Desenvolvido com ☕ e 💚**  
+## 📄 Licença
+
+Copyright © 2025 Gonçalo Fernandes. Todos os direitos reservados.
+
+Este projeto foi desenvolvido para fins educacionais e de portfólio.
+
+---
+
+**Desenvolvido com ☕ e 💚 por Gonçalo Fernandes**  
 **Versão:** 1.1.0 | **Última Atualização:** Outubro 2025
