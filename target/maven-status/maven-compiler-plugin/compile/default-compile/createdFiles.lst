@@ -1,4 +1,5 @@
 barbershopAPI/barbershopAPI/controllers/RestExceptionHandler.class
+barbershopAPI/barbershopAPI/services/AppointmentReminderScheduler.class
 barbershopAPI/barbershopAPI/services/AvailabilityService.class
 barbershopAPI/barbershopAPI/dto/AuthDTOs/LoginRequest.class
 barbershopAPI/barbershopAPI/entities/TimeOff.class
@@ -23,6 +24,7 @@ barbershopAPI/barbershopAPI/repositories/TimeOffRepository.class
 barbershopAPI/barbershopAPI/entities/Appointment.class
 barbershopAPI/barbershopAPI/controllers/AvailabilityController.class
 barbershopAPI/barbershopAPI/dto/ServiceDTOs/ServiceUpdateRequest.class
+barbershopAPI/barbershopAPI/dto/AppointmentDTOs/UpdateStatusRequest.class
 barbershopAPI/barbershopAPI/services/JwtService.class
 barbershopAPI/barbershopAPI/dto/AppointmentDTOs/CreateAppointmentRequest.class
 barbershopAPI/barbershopAPI/config/AsyncConfig.class
@@ -40,10 +42,12 @@ barbershopAPI/barbershopAPI/dto/TimeOffDTOs/TimeOffCreateRequest.class
 barbershopAPI/barbershopAPI/services/Auth/AuthService.class
 barbershopAPI/barbershopAPI/entities/Appointment$AppointmentBuilder.class
 barbershopAPI/barbershopAPI/controllers/AuthController$VerifyResponse.class
+barbershopAPI/barbershopAPI/services/EmailService.class
 barbershopAPI/barbershopAPI/entities/Barber.class
 barbershopAPI/barbershopAPI/dto/ClientDTOs/ClientUpdateRequest.class
 barbershopAPI/barbershopAPI/dto/AuthDTOs/AuthUserDto.class
 barbershopAPI/barbershopAPI/dto/ServiceDTOs/ServiceCreateRequest.class
+barbershopAPI/barbershopAPI/dto/AppointmentDTOs/UpdateAppointmentRequest.class
 barbershopAPI/barbershopAPI/dto/BarberDTOs/BarberResponse.class
 barbershopAPI/barbershopAPI/services/AppointmentService$SlotConflictException.class
 barbershopAPI/barbershopAPI/utils/ResourceNotFoundException.class

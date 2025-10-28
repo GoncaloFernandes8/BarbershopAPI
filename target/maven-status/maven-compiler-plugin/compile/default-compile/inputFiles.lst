@@ -15,6 +15,8 @@
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/controllers/WorkingHoursController.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/AppointmentDTOs/AppointmentResponse.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/AppointmentDTOs/CreateAppointmentRequest.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/AppointmentDTOs/UpdateAppointmentRequest.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/AppointmentDTOs/UpdateStatusRequest.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/AuthDTOs/AuthUserDto.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/AuthDTOs/LoginRequest.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/dto/AuthDTOs/LoginResponse.java
@@ -46,10 +48,12 @@
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/repositories/ServiceRepository.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/repositories/TimeOffRepository.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/repositories/WorkingHoursRepository.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/AppointmentReminderScheduler.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/AppointmentService.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/Auth/AuthService.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/AvailabilityService.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/ClientUserDetailsService.java
+/home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/EmailService.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/JwtService.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/Mailer.java
 /home/gon-alo/Documents/Projetos/BarbershopAPI/src/main/java/barbershopAPI/barbershopAPI/services/RegistrationService.java

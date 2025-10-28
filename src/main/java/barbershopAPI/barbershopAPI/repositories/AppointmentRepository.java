@@ -27,5 +27,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
             OffsetDateTime startWindow, OffsetDateTime endWindow);
     
     List<Appointment> findAllByStartsAtBefore(OffsetDateTime cutoffTime);
+    
+    // Para estatísticas do dashboard
+    List<Appointment> findAllByStartsAtBetween(OffsetDateTime from, OffsetDateTime to);
 
 }
