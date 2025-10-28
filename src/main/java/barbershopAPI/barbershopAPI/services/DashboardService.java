@@ -67,9 +67,9 @@ public class DashboardService {
         // 2. Total de clientes
         stats.setTotalClients((int) clientRepository.count());
         
-        // 3. Receita mensal (apenas confirmadas e completadas)
+        // 3. Receita mensal (apenas agendadas e completadas)
         double monthlyRevenue = monthAppointments.stream()
-                .filter(a -> a.getStatus() == AppointmentStatus.CONFIRMED 
+                .filter(a -> a.getStatus() == AppointmentStatus.SCHEDULED 
                           || a.getStatus() == AppointmentStatus.COMPLETED)
                 .mapToDouble(a -> a.getService().getPriceCents() / 100.0)
                 .sum();
@@ -152,7 +152,7 @@ public class DashboardService {
                     barbershopAPI.barbershopAPI.entities.Service service = serviceAppointments.get(0).getService();
                     long count = serviceAppointments.size();
                     double revenue = serviceAppointments.stream()
-                            .filter(a -> a.getStatus() == AppointmentStatus.CONFIRMED 
+                            .filter(a -> a.getStatus() == AppointmentStatus.SCHEDULED 
                                       || a.getStatus() == AppointmentStatus.COMPLETED)
                             .mapToDouble(a -> a.getService().getPriceCents() / 100.0)
                             .sum();
