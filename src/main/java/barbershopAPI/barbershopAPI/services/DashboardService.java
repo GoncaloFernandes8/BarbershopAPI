@@ -8,6 +8,7 @@ import barbershopAPI.barbershopAPI.repositories.ClientRepository;
 import barbershopAPI.barbershopAPI.repositories.ServiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +26,7 @@ public class DashboardService {
     
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
     
+    @Transactional(readOnly = true)
     public DashboardStats calculateStatistics() {
         DashboardStats stats = new DashboardStats();
         
