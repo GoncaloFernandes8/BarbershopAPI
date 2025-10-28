@@ -62,4 +62,10 @@ public class ServiceController {
         s.setActive(false);
         repo.save(s);
     }
+    
+    @DeleteMapping("/{id}/permanent")
+    public void hardDelete(@PathVariable Long id) {
+        var s = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Service not found"));
+        repo.delete(s);
+    }
 }
