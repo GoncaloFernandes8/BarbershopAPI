@@ -5,6 +5,7 @@ import barbershopAPI.barbershopAPI.dto.ClientDTOs.ClientResponse;
 import barbershopAPI.barbershopAPI.dto.ClientDTOs.ClientUpdateRequest;
 import barbershopAPI.barbershopAPI.entities.Client;
 import barbershopAPI.barbershopAPI.repositories.ClientRepository;
+import barbershopAPI.barbershopAPI.services.NotificationService;
 import barbershopAPI.barbershopAPI.utils.ResourceNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +18,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClientController {
     private final ClientRepository repo;
+    private final NotificationService notificationService;
 
     @PostMapping
     public ClientResponse create(@Valid @RequestBody ClientCreateRequest req) {
         Client c = Client.builder().name(req.name()).phone(req.phone()).email(req.email()).password(req.password()).build();
         c = repo.save(c);
+        
+        // Create notification for new client
+        notificationService.notifyNewClient(c.getName());
+        
         return new ClientResponse(c.getId(), c.getName(), c.getPhone());
     }
 

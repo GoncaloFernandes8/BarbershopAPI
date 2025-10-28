@@ -11,6 +11,7 @@ import barbershopAPI.barbershopAPI.repositories.AppointmentRepository;
 import barbershopAPI.barbershopAPI.repositories.ClientRepository;
 import barbershopAPI.barbershopAPI.services.AppointmentService;
 import barbershopAPI.barbershopAPI.services.JwtService;
+import barbershopAPI.barbershopAPI.services.NotificationService;
 import barbershopAPI.barbershopAPI.utils.ResourceNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class AppointmentController {
     private final AppointmentRepository appointmentRepo;
     private final JwtService jwtService;
     private final ClientRepository clientRepo;
+    private final NotificationService notificationService;
 
     @PostMapping
     public AppointmentResponse create(@Valid @RequestBody CreateAppointmentRequest req) {
@@ -47,6 +49,16 @@ public class AppointmentController {
         a.setStatus(AppointmentStatus.CANCELLED);
         a.setActive(false);
         a = appointmentRepo.save(a);
+        
+        // Create notification for cancelled appointment
+        try {
+            String timeStr = a.getStartsAt().toLocalTime().toString();
+            notificationService.notifyAppointmentCancelled(a.getClient().getName(), timeStr);
+        } catch (Exception ex) {
+            // Log error but don't fail the request
+            System.err.println("Falha ao criar notificação para cancelamento: " + ex.getMessage());
+        }
+        
         return new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
                 a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes());
     }
@@ -65,10 +77,24 @@ public class AppointmentController {
             }
             
             a = appointmentRepo.save(a);
+            
+            // Create notification based on status change
+            try {
+                String timeStr = a.getStartsAt().toLocalTime().toString();
+                if (newStatus == AppointmentStatus.SCHEDULED) {
+                    notificationService.notifyAppointmentConfirmed(a.getClient().getName(), timeStr);
+                } else if (newStatus == AppointmentStatus.CANCELLED) {
+                    notificationService.notifyAppointmentCancelled(a.getClient().getName(), timeStr);
+                }
+            } catch (Exception ex) {
+                // Log error but don't fail the request
+                System.err.println("Falha ao criar notificação para mudança de status: " + ex.getMessage());
+            }
+            
             return new AppointmentResponse(a.getId(), a.getBarber().getId(), a.getService().getId(),
                     a.getClient().getId(), a.getStartsAt(), a.getEndsAt(), a.getStatus().name(), a.getNotes());
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid status. Valid values: PENDING, CONFIRMED, CANCELLED, COMPLETED, NO_SHOW");
+            throw new IllegalArgumentException("Invalid status. Valid values: SCHEDULED, CANCELLED, COMPLETED, NO_SHOW");
         }
     }
 

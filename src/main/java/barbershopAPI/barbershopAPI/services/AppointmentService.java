@@ -5,6 +5,7 @@ import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.AppointmentResponse;
 import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.CreateAppointmentRequest;
 import barbershopAPI.barbershopAPI.dto.AppointmentDTOs.UpdateAppointmentRequest;
 import barbershopAPI.barbershopAPI.utils.ResourceNotFoundException;
+import barbershopAPI.barbershopAPI.services.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,6 +25,7 @@ public class AppointmentService {
     private final ServiceRepository serviceRepo;
     private final ClientRepository clientRepo;
     private final TimeOffRepository timeOffRepo;
+    private final NotificationService notificationService;
 
     @Transactional
     public AppointmentResponse create(CreateAppointmentRequest req) {
@@ -65,6 +67,13 @@ public class AppointmentService {
             log.warn("Falha ao enviar email de confirmação para {} (appt {}).", client.getEmail(), appt.getId(), ex);
         }
 
+        // Create notification for new appointment
+        try {
+            String timeStr = appt.getStartsAt().toLocalTime().toString();
+            notificationService.notifyNewAppointment(client.getName(), barber.getName(), timeStr);
+        } catch (Exception ex) {
+            log.warn("Falha ao criar notificação para novo agendamento {}: {}", appt.getId(), ex.getMessage());
+        }
 
         return new AppointmentResponse(
                 appt.getId(),
