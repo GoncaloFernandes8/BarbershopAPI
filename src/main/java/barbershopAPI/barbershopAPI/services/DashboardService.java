@@ -77,7 +77,7 @@ public class DashboardService {
         
         // 4. Serviços ativos
         stats.setActiveServices((int) serviceRepository.findAll().stream()
-                .filter(barbershopAPI.barbershopAPI.entities.Service::isActive)
+                .filter(barbershopAPI.barbershopAPI.entities.ServiceEntity::isActive)
                 .count());
         
         // 5. Total de marcações do mês
@@ -149,7 +149,7 @@ public class DashboardService {
                         return null;
                     }
                     
-                    barbershopAPI.barbershopAPI.entities.Service service = serviceAppointments.get(0).getService();
+                    barbershopAPI.barbershopAPI.entities.ServiceEntity service = serviceAppointments.get(0).getService();
                     long count = serviceAppointments.size();
                     double revenue = serviceAppointments.stream()
                             .filter(a -> a.getStatus() == AppointmentStatus.SCHEDULED 
