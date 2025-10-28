@@ -14,4 +14,8 @@ public interface TimeOffRepository extends JpaRepository<TimeOff, Long> {
     // usado no AvailabilityService: verificar overlap (startsAt < end && endsAt > start)
     boolean existsByBarberIdAndStartsAtLessThanAndEndsAtGreaterThan(
             Long barberId, OffsetDateTime end, OffsetDateTime start);
+    
+    // usado no AppointmentService: listar time-offs que sobrepõem com o período
+    List<TimeOff> findAllByBarberIdAndStartsAtLessThanAndEndsAtGreaterThan(
+            Long barberId, OffsetDateTime end, OffsetDateTime start);
 }

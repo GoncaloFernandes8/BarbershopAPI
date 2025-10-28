@@ -23,6 +23,7 @@ public class AppointmentService {
     private final BarberRepository barberRepo;
     private final ServiceRepository serviceRepo;
     private final ClientRepository clientRepo;
+    private final TimeOffRepository timeOffRepo;
 
     @Transactional
     public AppointmentResponse create(CreateAppointmentRequest req) {
@@ -37,6 +38,11 @@ public class AppointmentService {
         // pré-checagem rápida de conflito (melhor UX)
         boolean busy = appointmentRepo.existsByBarberIdAndIsActiveTrueAndStartsAtLessThanAndEndsAtGreaterThan(barber.getId(), startsAt, endsAt);
         if (busy) throw new SlotConflictException("Slot já ocupado para este barbeiro");
+        
+        // Verificar se o barbeiro está de folga neste período
+        if (isBarberOnTimeOff(barber.getId(), startsAt, endsAt)) {
+            throw new TimeOffConflictException("O barbeiro está de folga neste período");
+        }
 
         var appt = Appointment.builder()
                 .barber(barber)
@@ -128,6 +134,11 @@ public class AppointmentService {
                     throw new SlotConflictException("Slot já ocupado para este barbeiro");
                 }
             }
+            
+            // Verificar se o barbeiro está de folga no novo período
+            if (isBarberOnTimeOff(appt.getBarber().getId(), newStartsAt, newEndsAt)) {
+                throw new TimeOffConflictException("O barbeiro está de folga neste período");
+            }
 
             appt.setStartsAt(newStartsAt);
             appt.setEndsAt(newEndsAt);
@@ -160,7 +171,20 @@ public class AppointmentService {
         );
     }
 
+    /**
+     * Verifica se o barbeiro está de folga no período especificado
+     */
+    private boolean isBarberOnTimeOff(Long barberId, OffsetDateTime startsAt, OffsetDateTime endsAt) {
+        var timeOffs = timeOffRepo.findAllByBarberIdAndStartsAtLessThanAndEndsAtGreaterThan(
+                barberId, endsAt, startsAt);
+        return !timeOffs.isEmpty();
+    }
+
     public static class SlotConflictException extends RuntimeException {
         public SlotConflictException(String message) { super(message); }
+    }
+    
+    public static class TimeOffConflictException extends RuntimeException {
+        public TimeOffConflictException(String message) { super(message); }
     }
 }
