@@ -58,8 +58,10 @@ public class AppointmentReminderScheduler {
                 }
                 
                 // Verificar se a marcação está em estado válido para lembrete
-                // Só envia para marcações SCHEDULED (não canceladas, não completadas)
-                if (appointment.getStatus() != AppointmentStatus.SCHEDULED) {
+                // Só envia para marcações ativas (não canceladas, não completadas)
+                if (appointment.getStatus() == AppointmentStatus.CANCELLED || 
+                    appointment.getStatus() == AppointmentStatus.COMPLETED ||
+                    appointment.getStatus() == AppointmentStatus.NO_SHOW) {
                     log.debug("Marcação {} em estado {} - não enviando lembrete", 
                              appointment.getId(), appointment.getStatus());
                     continue;

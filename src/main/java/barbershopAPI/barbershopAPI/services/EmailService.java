@@ -22,6 +22,10 @@ public class EmailService {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("pt-PT"));
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm", Locale.forLanguageTag("pt-PT"));
     
+    // Email remetente - usar variável de ambiente ou fallback
+    private static final String FROM_EMAIL = System.getenv().getOrDefault("MAIL_FROM", "no-reply@barbershop.pt");
+    private static final String FROM_NAME = System.getenv().getOrDefault("MAIL_FROM_NAME", "Barbershop");
+    
     /**
      * Envia email de lembrete de marcação
      */
@@ -30,19 +34,23 @@ public class EmailService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             
+            // ✅ CORRIGIDO: Definir remetente
+            helper.setFrom(FROM_EMAIL, FROM_NAME);
             helper.setTo(appointment.getClient().getEmail());
             helper.setSubject("✂️ Lembrete: A sua marcação é daqui a 1 hora!");
             helper.setText(buildReminderEmailHtml(appointment), true);
             
             mailSender.send(message);
-            log.info("Email de lembrete enviado para {} (Marcação: {})", 
+            log.info("✅ Email de lembrete enviado para {} (Marcação: {})", 
                      appointment.getClient().getEmail(), 
                      appointment.getId());
                      
         } catch (MessagingException e) {
-            log.error("Erro ao enviar email de lembrete para {}: {}", 
+            log.error("❌ Erro ao enviar email de lembrete para {}: {}", 
                       appointment.getClient().getEmail(), 
-                      e.getMessage());
+                      e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("❌ Erro inesperado ao enviar email: {}", e.getMessage(), e);
         }
     }
     
