@@ -27,6 +27,7 @@ public class RegistrationService {
     private final ClientRepository clientRepo;
     private final Mailer mailer;
     private final PasswordEncoder passwordEncoder; // garante que tens um encoder; se não usas Spring Security, cria um bean BCryptPasswordEncoder.
+    private final NotificationService notificationService;
 
     @Value("${FRONTEND_BASE_URL:https://example.com}")
     String frontendBaseUrl;
@@ -105,6 +106,13 @@ public class RegistrationService {
 
         rt.setUsedAt(now);
         tokenRepo.save(rt);
+
+        // Create notification for new client registration
+        try {
+            notificationService.notifyNewClient(c.getName());
+        } catch (Exception ex) {
+            log.warn("Falha ao criar notificação para novo cliente {}: {}", c.getEmail(), ex.getMessage());
+        }
 
         return c;
     }
