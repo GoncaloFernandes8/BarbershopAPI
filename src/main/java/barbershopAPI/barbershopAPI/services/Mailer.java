@@ -256,6 +256,86 @@ public class Mailer {
         }
     }
 
+    @Async
+    public void sendSetPasswordEmail(String to, String clientName, String setPasswordLink){
+        try {
+            var mime = mailSender.createMimeMessage();
+            var helper = new MimeMessageHelper(mime, true, StandardCharsets.UTF_8.name());
+            helper.setFrom(new InternetAddress(fromEmail, fromName));
+            helper.setTo(to);
+            helper.setSubject("Define a tua senha · Barbearia");
 
+            var html = """
+      <!doctype html>
+      <html lang="pt">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Define a tua senha</title>
+        <style>
+          body{margin:0;background:#f5f7fb;color:#0b0c0f;font-family:Arial,Helvetica,sans-serif}
+          .container{width:100%%;max-width:600px;margin:0 auto;background:#ffffff}
+          .header{padding:16px 24px;background:#111111;color:#ffffff}
+          .brand{font-weight:800}
+          .content{padding:24px}
+          h1{margin:0 0 8px 0}
+          p{font-size:14px;line-height:1.5;margin:12px 0}
+          .cta{display:inline-block;padding:12px 18px;border-radius:10px;text-decoration:none;background:#C3FF5A;color:#111111;font-weight:800}
+          .muted{color:#6b7280;font-size:12px}
+          .footer{padding:16px 24px;color:#6b7280;font-size:12px}
+        </style>
+      </head>
+      <body>
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" bgcolor="#f5f7fb">
+          <tr><td align="center">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="container">
+              <tr>
+                <td class="header">
+                  <div class="brand">Barbearia</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="content">
+                  <h1>Olá, %1$s! 👋</h1>
+                  <p>Criámos uma conta para ti na nossa plataforma. Para começares a usar, precisas de definir a tua senha.</p>
+                  <p>Clica no botão abaixo para definir a tua senha:</p>
+                  <p style="margin:18px 0">
+                    <a href="%2$s" class="cta" target="_blank" rel="noopener">Definir senha</a>
+                  </p>
+                  <p class="muted">Este link é válido por 48 horas. Se não pediste esta conta, podes ignorar este email.</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="footer">
+                  © Barbearia · Rua Principal, 123 · (+351) 900 000 000
+                </td>
+              </tr>
+            </table>
+          </td></tr>
+        </table>
+      </body>
+      </html>
+    """.formatted(clientName, setPasswordLink);
+
+            var text = """
+      Olá, %1$s!
+      
+      Criámos uma conta para ti na nossa plataforma. Para começares a usar, precisas de definir a tua senha.
+      
+      Define a tua senha aqui: %2$s
+      
+      Este link é válido por 48 horas.
+      
+      Até já!
+      Barbearia
+    """.formatted(clientName, setPasswordLink);
+
+            helper.setText(text, html);
+            mailSender.send(mime);
+            log.info("Email de definição de senha enviado para {}", to);
+        } catch (Exception ex) {
+            log.warn("Falha a enviar email de definição de senha para {}: {}", to, ex.getMessage(), ex);
+        }
+    }
 
 }
