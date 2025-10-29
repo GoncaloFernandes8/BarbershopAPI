@@ -22,9 +22,16 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
 
     List<Appointment> findAllByClientIdOrderByStartsAtDesc(Long clientId);
 
-    // Para o scheduler de lembretes
+    // Para o scheduler de lembretes - com JOIN FETCH para evitar LazyInitializationException
+    @Query("SELECT DISTINCT a FROM Appointment a " +
+           "LEFT JOIN FETCH a.client " +
+           "LEFT JOIN FETCH a.barber " +
+           "LEFT JOIN FETCH a.service " +
+           "WHERE a.isActive = true " +
+           "AND a.startsAt BETWEEN :start AND :end")
     List<Appointment> findAllByIsActiveTrueAndStartsAtBetween(
-            OffsetDateTime startWindow, OffsetDateTime endWindow);
+            @Param("start") OffsetDateTime startWindow, 
+            @Param("end") OffsetDateTime endWindow);
     
     List<Appointment> findAllByStartsAtBefore(OffsetDateTime cutoffTime);
     
