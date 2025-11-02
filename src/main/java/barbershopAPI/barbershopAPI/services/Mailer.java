@@ -110,7 +110,10 @@ public class Mailer {
         .info-value{color:#e9eef7;font-size:16px;font-weight:500;flex:1}
         .highlight{color:#C3FF5A;font-weight:700}
         .cta-container{text-align:center;margin:32px 0}
-        .cta{display:inline-block;background:#C3FF5A;color:#0f1117;text-decoration:none;padding:18px 40px;border-radius:12px;font-weight:800;font-size:16px;box-shadow:0 4px 16px rgba(195,255,90,0.3);transition:all 0.2s}
+        .cta{display:inline-block;background:#C3FF5A !important;color:#0f1117 !important;text-decoration:none !important;padding:18px 40px;border-radius:12px;font-weight:800;font-size:16px;box-shadow:0 4px 16px rgba(195,255,90,0.3);transition:all 0.2s}
+        .cta:visited{color:#0f1117 !important}
+        .cta:hover{color:#0f1117 !important}
+        .cta:active{color:#0f1117 !important}
         .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(195,255,90,0.2),transparent);margin:32px 0}
         .note-card{background:rgba(195,255,90,0.05);border-left:4px solid #C3FF5A;padding:20px;border-radius:8px;margin:24px 0}
         .note-icon{color:#C3FF5A;margin-bottom:8px}
@@ -189,7 +192,9 @@ public class Mailer {
                 %6$s
                 
                 <div class="cta-container">
-                  <a href="%7$s" class="cta">Ver marcação completa</a>
+                  <a href="%7$s" class="cta" style="color:#0f1117 !important;background:#C3FF5A !important;text-decoration:none !important">
+                    <span style="color:#0f1117 !important">Ver marcação completa</span>
+                  </a>
                 </div>
                 
                 <div class="divider"></div>
@@ -317,7 +322,10 @@ public class Mailer {
           .title{font-size:26px;font-weight:700;color:#e9eef7;margin:0 0 16px}
           .text{color:#9ca3af;font-size:16px;line-height:1.6;margin:0 0 36px;max-width:480px;margin-left:auto;margin-right:auto}
           .cta-container{text-align:center;margin:36px 0}
-          .cta{display:inline-block;background:#C3FF5A;color:#0f1117;text-decoration:none;padding:18px 48px;border-radius:12px;font-weight:800;font-size:16px;box-shadow:0 4px 16px rgba(195,255,90,0.3)}
+          .cta{display:inline-block;background:#C3FF5A !important;color:#0f1117 !important;text-decoration:none !important;padding:18px 48px;border-radius:12px;font-weight:800;font-size:16px;box-shadow:0 4px 16px rgba(195,255,90,0.3)}
+          .cta:visited{color:#0f1117 !important}
+          .cta:hover{color:#0f1117 !important}
+          .cta:active{color:#0f1117 !important}
           .warning{background:rgba(195,255,90,0.08);border:1px solid rgba(195,255,90,0.2);border-radius:10px;padding:18px;margin:28px auto 0;max-width:400px;display:flex;align-items:center;justify-content:center;gap:10px}
           .warning-icon{color:#C3FF5A;flex-shrink:0}
           .warning-text{color:#cbd4e6;font-size:14px;font-weight:500;margin:0}
@@ -346,7 +354,9 @@ public class Mailer {
                   <h1 class="title">Confirma o teu email</h1>
                   <p class="text">Estás quase lá! Clica no botão abaixo para verificar o teu email e ativar a tua conta na Barbershop.</p>
                   <div class="cta-container">
-                    <a href="%s" class="cta">Confirmar email</a>
+                    <a href="%s" class="cta" style="color:#0f1117 !important;background:#C3FF5A !important;text-decoration:none !important">
+                      <span style="color:#0f1117 !important">Confirmar email</span>
+                    </a>
                   </div>
                   <div class="warning">
                     <svg class="warning-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -427,7 +437,10 @@ public class Mailer {
           .step-number{background:#C3FF5A;color:#0f1117;font-weight:800;width:36px;height:36px;border-radius:50%%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
           .step-text{color:#e9eef7;font-size:15px;font-weight:500;flex:1}
           .cta-container{text-align:center;margin:36px 0}
-          .cta{display:inline-block;background:#C3FF5A;color:#0f1117;text-decoration:none;padding:18px 48px;border-radius:12px;font-weight:800;font-size:16px;box-shadow:0 4px 16px rgba(195,255,90,0.3)}
+          .cta{display:inline-block;background:#C3FF5A !important;color:#0f1117 !important;text-decoration:none !important;padding:18px 48px;border-radius:12px;font-weight:800;font-size:16px;box-shadow:0 4px 16px rgba(195,255,90,0.3)}
+          .cta:visited{color:#0f1117 !important}
+          .cta:hover{color:#0f1117 !important}
+          .cta:active{color:#0f1117 !important}
           .warning{background:rgba(195,255,90,0.08);border:1px solid rgba(195,255,90,0.2);border-radius:10px;padding:18px;margin:28px auto 0;max-width:400px;display:flex;align-items:center;justify-content:center;gap:10px}
           .warning-icon{color:#C3FF5A;flex-shrink:0}
           .warning-text{color:#cbd4e6;font-size:14px;font-weight:500;margin:0}
@@ -479,7 +492,9 @@ public class Mailer {
                   </div>
                   
                   <div class="cta-container">
-                    <a href="%2$s" class="cta">Definir senha</a>
+                    <a href="%2$s" class="cta" style="color:#0f1117 !important;background:#C3FF5A !important;text-decoration:none !important">
+                      <span style="color:#0f1117 !important">Definir senha</span>
+                    </a>
                   </div>
                   
                   <div class="warning">
