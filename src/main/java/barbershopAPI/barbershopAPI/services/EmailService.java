@@ -76,7 +76,18 @@ public class EmailService {
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="color-scheme" content="light only">
+      <meta name="supported-color-schemes" content="light only">
       <title>Lembrete de Marcação</title>
+      <style>
+        :root{color-scheme:light only;supported-color-schemes:light only}
+        @media (prefers-color-scheme: dark){
+          .container{background:#16181d !important}
+          .header{background:#C3FF5A !important}
+          .content{background:#16181d !important}
+          .title{color:#e9eef7 !important}
+        }
+      </style>
       <style>
         body{margin:0;padding:0;background:#0f1117;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
         .wrapper{width:100%%;background:#0f1117;padding:40px 20px}
@@ -113,98 +124,98 @@ public class EmailService {
       <div class="wrapper">
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
           <tr><td align="center">
-            <div class="container">
-              <div class="header">
-                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <div class="container" style="background:#16181d !important;border:1px solid #2a3042 !important">
+              <div class="header" style="background:#C3FF5A !important;padding:40px;text-align:center">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="#0f1117" stroke-width="2" style="color:#0f1117 !important;width:48px;height:48px;margin:0 auto 12px">
                   <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
                   <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"/>
                 </svg>
-                <h1 class="brand">BARBERSHOP</h1>
-                <p class="tagline">Estilo & Tradição</p>
+                <h1 class="brand" style="color:#0f1117 !important;font-size:26px;font-weight:800;margin:0">BARBERSHOP</h1>
+                <p class="tagline" style="color:rgba(15,17,23,0.6) !important;font-size:13px;margin:6px 0 0">Estilo & Tradição</p>
               </div>
               
-              <div class="content">
-                <div class="alert">
-                  <svg class="alert-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <div class="content" style="padding:40px;background:#16181d !important">
+                <div class="alert" style="background:rgba(195,255,90,0.15) !important;border:1px solid rgba(195,255,90,0.4) !important;border-left:4px solid #C3FF5A !important">
+                  <svg class="alert-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                     <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
                   </svg>
-                  <p class="alert-text">A tua marcação é daqui a 1 hora!</p>
+                  <p class="alert-text" style="color:#e9eef7 !important;margin:0">A tua marcação é daqui a 1 hora!</p>
                 </div>
                 
-                <h2 class="title">Olá, %s</h2>
-                <p class="subtitle">Este é um lembrete da tua marcação que se aproxima. Preparámos tudo para te receber!</p>
+                <h2 class="title" style="color:#e9eef7 !important;font-size:24px;font-weight:700;margin:0 0 12px">Olá, %s</h2>
+                <p class="subtitle" style="color:#9ca3af !important;font-size:15px;margin:0 0 32px">Este é um lembrete da tua marcação que se aproxima. Preparámos tudo para te receber!</p>
                 
-                <div class="info-card">
-                  <div class="info-row">
+                <div class="info-card" style="background:rgba(0,0,0,0.3) !important;border:1px solid #2a3042 !important">
+                  <div class="info-row" style="border-bottom:1px solid #2a3042 !important">
                     <div class="info-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
                       </svg>
                     </div>
-                    <div class="info-label">Barbeiro</div>
-                    <div class="info-value">%s</div>
+                    <div class="info-label" style="color:#6b7280 !important">Barbeiro</div>
+                    <div class="info-value" style="color:#e9eef7 !important">%s</div>
                   </div>
-                  <div class="info-row">
+                  <div class="info-row" style="border-bottom:1px solid #2a3042 !important">
                     <div class="info-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                         <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
                         <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"/>
                       </svg>
                     </div>
-                    <div class="info-label">Serviço</div>
-                    <div class="info-value">%s <span style="color:#6b7280">(%s)</span></div>
+                    <div class="info-label" style="color:#6b7280 !important">Serviço</div>
+                    <div class="info-value" style="color:#e9eef7 !important">%s <span style="color:#6b7280 !important">(%s)</span></div>
                   </div>
-                  <div class="info-row">
+                  <div class="info-row" style="border-bottom:1px solid #2a3042 !important">
                     <div class="info-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                         <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
                       </svg>
                     </div>
-                    <div class="info-label">Quando</div>
-                    <div class="info-value highlight">%s às %s</div>
+                    <div class="info-label" style="color:#6b7280 !important">Quando</div>
+                    <div class="info-value" style="color:#C3FF5A !important;font-weight:700">%s às %s</div>
                   </div>
-                  <div class="info-row">
+                  <div class="info-row" style="border-bottom:1px solid #2a3042 !important">
                     <div class="info-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                         <circle cx="12" cy="12" r="10"/><path d="M12 2v12l4.5 4.5"/>
                       </svg>
                     </div>
-                    <div class="info-label">Termina</div>
-                    <div class="info-value">%s</div>
+                    <div class="info-label" style="color:#6b7280 !important">Termina</div>
+                    <div class="info-value" style="color:#e9eef7 !important">%s</div>
                   </div>
-                  <div class="info-row">
+                  <div class="info-row" style="border-bottom:1px solid #2a3042 !important">
                     <div class="info-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                         <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
                       </svg>
                     </div>
-                    <div class="info-label">Preço</div>
-                    <div class="info-value highlight">%s</div>
+                    <div class="info-label" style="color:#6b7280 !important">Preço</div>
+                    <div class="info-value" style="color:#C3FF5A !important;font-weight:700">%s</div>
                   </div>
                   <div class="info-row">
                     <div class="info-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                         <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
                       </svg>
                     </div>
-                    <div class="info-label">Notas</div>
-                    <div class="info-value" style="color:#9ca3af">%s</div>
+                    <div class="info-label" style="color:#6b7280 !important">Notas</div>
+                    <div class="info-value" style="color:#9ca3af !important">%s</div>
                   </div>
                 </div>
                 
-                <div class="tips-card">
-                  <div class="tips-title">
-                    <svg class="tips-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <div class="tips-card" style="background:rgba(195,255,90,0.08) !important;border:1px solid rgba(195,255,90,0.2) !important">
+                  <div class="tips-title" style="color:#C3FF5A !important">
+                    <svg class="tips-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                       <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
                     </svg>
-                    Dicas para a tua visita
+                    <span style="color:#C3FF5A !important">Dicas para a tua visita</span>
                   </div>
-                  <ul class="tips-list">
-                    <li>Chega com 5 minutos de antecedência</li>
-                    <li>Se precisares de cancelar, avisa com antecedência</li>
-                    <li>Traz uma foto de referência se tiveres</li>
-                    <li>Estacionamento disponível na rua</li>
+                  <ul class="tips-list" style="color:#cbd4e6 !important;margin:0;padding-left:20px">
+                    <li style="color:#cbd4e6 !important">Chega com 5 minutos de antecedência</li>
+                    <li style="color:#cbd4e6 !important">Se precisares de cancelar, avisa com antecedência</li>
+                    <li style="color:#cbd4e6 !important">Traz uma foto de referência se tiveres</li>
+                    <li style="color:#cbd4e6 !important">Estacionamento disponível na rua</li>
                   </ul>
                 </div>
                 

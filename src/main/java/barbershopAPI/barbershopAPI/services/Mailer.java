@@ -47,7 +47,7 @@ public class Mailer {
             var endsLisbon = appt.getEndsAt() == null ? null : appt.getEndsAt().atZoneSameInstant(TZ);
 
             var dateHuman = whenLisbon.format(DateTimeFormatter.ofPattern("EEEE, d 'de' MMMM 'às' HH:mm", PT));
-            var subject = "✅ Marcação confirmada – " + dateHuman;
+            var subject = "Marcação confirmada – " + dateHuman;
 
             var successUrl = frontendBaseUrl.replaceAll("/+$", "")
                     + "/sucesso/" + appt.getId().toString();
@@ -88,7 +88,22 @@ public class Mailer {
       <meta charset="utf-8">
       <meta name="x-apple-disable-message-reformatting">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="color-scheme" content="light only">
+      <meta name="supported-color-schemes" content="light only">
       <title>Marcação confirmada</title>
+      <style>
+        :root{color-scheme:light only;supported-color-schemes:light only}
+        body{-webkit-text-size-adjust:100%%;-ms-text-size-adjust:100%%}
+        @media (prefers-color-scheme: dark){
+          .container{background:#16181d !important}
+          .header{background:#C3FF5A !important}
+          .brand{color:#0f1117 !important}
+          .content{background:#16181d !important}
+          .title{color:#e9eef7 !important}
+          .subtitle{color:#9ca3af !important}
+          .info-value{color:#e9eef7 !important}
+        }
+      </style>
       <style>
         body{margin:0;padding:0;background:#0f1117;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
         .wrapper{width:100%%;background:#0f1117;padding:40px 20px}
@@ -128,64 +143,64 @@ public class Mailer {
       <div class="wrapper">
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
           <tr><td align="center">
-            <div class="container">
-              <div class="header">
-                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <div class="container" style="background:#16181d !important;border:1px solid #2a3042 !important">
+              <div class="header" style="background:#C3FF5A !important;padding:40px;text-align:center">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="#0f1117" stroke-width="2" style="color:#0f1117 !important;width:48px;height:48px;margin:0 auto 12px">
                   <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
                   <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"/>
                 </svg>
-                <h1 class="brand">BARBERSHOP</h1>
-                <p class="tagline">Estilo & Tradição</p>
+                <h1 class="brand" style="color:#0f1117 !important;font-size:26px;font-weight:800;margin:0;letter-spacing:-0.5px">BARBERSHOP</h1>
+                <p class="tagline" style="color:rgba(15,17,23,0.6) !important;font-size:13px;margin:6px 0 0;font-weight:500">Estilo & Tradição</p>
               </div>
               
-              <div class="content">
-                <div class="status-badge">
-                  <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <div class="content" style="padding:40px;background:#16181d !important">
+                <div class="status-badge" style="display:inline-flex;align-items:center;gap:8px;background:rgba(195,255,90,0.15) !important;border:1px solid rgba(195,255,90,0.3) !important;color:#C3FF5A !important;padding:10px 20px;border-radius:24px;font-size:13px;font-weight:700;margin:0 0 28px;letter-spacing:0.5px">
+                  <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2.5" style="color:#C3FF5A !important;width:18px;height:18px">
                     <path d="M20 6L9 17l-5-5"/>
                   </svg>
-                  CONFIRMADA
+                  <span style="color:#C3FF5A !important">CONFIRMADA</span>
                 </div>
-                <h2 class="title">A tua marcação está confirmada</h2>
-                <p class="subtitle">Preparámos tudo para te receber. Aqui estão os detalhes da tua visita:</p>
+                <h2 class="title" style="color:#e9eef7 !important;font-size:24px;font-weight:700;margin:0 0 12px">A tua marcação está confirmada</h2>
+                <p class="subtitle" style="color:#9ca3af !important;font-size:15px;margin:0 0 32px">Preparámos tudo para te receber. Aqui estão os detalhes da tua visita:</p>
                 
-                <div class="info-card">
-                  <div class="info-row">
+                <div class="info-card" style="background:rgba(0,0,0,0.3) !important;border:1px solid #2a3042 !important">
+                  <div class="info-row" style="border-bottom:1px solid #2a3042 !important">
                     <div class="info-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                         <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
                       </svg>
                     </div>
-                    <div class="info-label">Quando</div>
-                    <div class="info-value highlight">%1$s</div>
+                    <div class="info-label" style="color:#6b7280 !important">Quando</div>
+                    <div class="info-value" style="color:#C3FF5A !important;font-weight:700">%1$s</div>
                   </div>
-                  <div class="info-row">
+                  <div class="info-row" style="border-bottom:1px solid #2a3042 !important">
                     <div class="info-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                         <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
                         <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"/>
                       </svg>
                     </div>
-                    <div class="info-label">Serviço</div>
-                    <div class="info-value">%2$s <span style="color:#6b7280">(%3$d min)</span></div>
+                    <div class="info-label" style="color:#6b7280 !important">Serviço</div>
+                    <div class="info-value" style="color:#e9eef7 !important">%2$s <span style="color:#6b7280 !important">(%3$d min)</span></div>
                   </div>
-                  <div class="info-row">
+                  <div class="info-row" style="border-bottom:1px solid #2a3042 !important">
                     <div class="info-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
                       </svg>
                     </div>
-                    <div class="info-label">Barbeiro</div>
-                    <div class="info-value">%4$s</div>
+                    <div class="info-label" style="color:#6b7280 !important">Barbeiro</div>
+                    <div class="info-value" style="color:#e9eef7 !important">%4$s</div>
                   </div>
                   <div class="info-row">
                     <div class="info-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                         <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
                         <circle cx="7" cy="7" r="1"/>
                       </svg>
                     </div>
-                    <div class="info-label">Referência</div>
-                    <div class="info-value">#%5$s</div>
+                    <div class="info-label" style="color:#6b7280 !important">Referência</div>
+                    <div class="info-value" style="color:#e9eef7 !important">#%5$s</div>
                   </div>
                 </div>
                 
@@ -308,7 +323,18 @@ public class Mailer {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="light only">
+        <meta name="supported-color-schemes" content="light only">
         <title>Confirma o teu email</title>
+        <style>
+          :root{color-scheme:light only;supported-color-schemes:light only}
+          @media (prefers-color-scheme: dark){
+            .container{background:#16181d !important}
+            .header{background:#C3FF5A !important}
+            .content{background:#16181d !important}
+            .title{color:#e9eef7 !important}
+          }
+        </style>
         <style>
           body{margin:0;padding:0;background:#0f1117;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
           .wrapper{width:100%%;background:#0f1117;padding:40px 20px}
@@ -338,31 +364,31 @@ public class Mailer {
         <div class="wrapper">
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
             <tr><td align="center">
-              <div class="container">
-                <div class="header">
-                  <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <div class="container" style="background:#16181d !important;border:1px solid #2a3042 !important">
+                <div class="header" style="background:#C3FF5A !important;padding:40px;text-align:center">
+                  <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="#0f1117" stroke-width="2" style="color:#0f1117 !important;width:48px;height:48px;margin:0 auto 12px">
                     <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
                     <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"/>
                   </svg>
-                  <div class="brand">BARBERSHOP</div>
-                  <p class="tagline">Estilo & Tradição</p>
+                  <div class="brand" style="color:#0f1117 !important;font-size:26px;font-weight:800;margin:0">BARBERSHOP</div>
+                  <p class="tagline" style="color:rgba(15,17,23,0.6) !important;font-size:13px;margin:6px 0 0">Estilo & Tradição</p>
                 </div>
-                <div class="content">
-                  <svg class="hero-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <div class="content" style="padding:40px;background:#16181d !important;text-align:center">
+                  <svg class="hero-icon" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="1.5" style="color:#C3FF5A !important;width:80px;height:80px;margin:0 auto 28px">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                   </svg>
-                  <h1 class="title">Confirma o teu email</h1>
-                  <p class="text">Estás quase lá! Clica no botão abaixo para verificar o teu email e ativar a tua conta na Barbershop.</p>
+                  <h1 class="title" style="color:#e9eef7 !important;font-size:26px;font-weight:700;margin:0 0 16px">Confirma o teu email</h1>
+                  <p class="text" style="color:#9ca3af !important;font-size:16px;margin:0 0 36px">Estás quase lá! Clica no botão abaixo para verificar o teu email e ativar a tua conta na Barbershop.</p>
                   <div class="cta-container">
                     <a href="%s" class="cta" style="color:#0f1117 !important;background:#C3FF5A !important;text-decoration:none !important">
                       <span style="color:#0f1117 !important">Confirmar email</span>
                     </a>
                   </div>
-                  <div class="warning">
-                    <svg class="warning-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <div class="warning" style="background:rgba(195,255,90,0.08) !important;border:1px solid rgba(195,255,90,0.2) !important">
+                    <svg class="warning-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                       <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
                     </svg>
-                    <p class="warning-text">Este link expira em 24 horas</p>
+                    <p class="warning-text" style="color:#cbd4e6 !important;margin:0">Este link expira em 24 horas</p>
                   </div>
                   <p style="color:#6b7280;font-size:13px;margin:28px 0 0">Se não criaste esta conta, ignora este email.</p>
                 </div>
@@ -416,7 +442,18 @@ public class Mailer {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="light only">
+        <meta name="supported-color-schemes" content="light only">
         <title>Define a tua senha</title>
+        <style>
+          :root{color-scheme:light only;supported-color-schemes:light only}
+          @media (prefers-color-scheme: dark){
+            .container{background:#16181d !important}
+            .header{background:#C3FF5A !important}
+            .content{background:#16181d !important}
+            .title{color:#e9eef7 !important}
+          }
+        </style>
         <style>
           body{margin:0;padding:0;background:#0f1117;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
           .wrapper{width:100%%;background:#0f1117;padding:40px 20px}
@@ -453,41 +490,41 @@ public class Mailer {
         <div class="wrapper">
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
             <tr><td align="center">
-              <div class="container">
-                <div class="header">
-                  <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <div class="container" style="background:#16181d !important;border:1px solid #2a3042 !important">
+                <div class="header" style="background:#C3FF5A !important;padding:40px;text-align:center">
+                  <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="#0f1117" stroke-width="2" style="color:#0f1117 !important;width:48px;height:48px;margin:0 auto 12px">
                     <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
                     <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"/>
                   </svg>
-                  <div class="brand">BARBERSHOP</div>
-                  <p class="tagline">Estilo & Tradição</p>
+                  <div class="brand" style="color:#0f1117 !important;font-size:26px;font-weight:800;margin:0">BARBERSHOP</div>
+                  <p class="tagline" style="color:rgba(15,17,23,0.6) !important;font-size:13px;margin:6px 0 0">Estilo & Tradição</p>
                 </div>
-                <div class="content">
-                  <svg class="hero-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <div class="content" style="padding:40px;background:#16181d !important">
+                  <svg class="hero-icon" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="1.5" style="color:#C3FF5A !important;width:80px;height:80px;margin:0 auto 28px">
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
                     <circle cx="9" cy="7" r="4"/>
                     <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
                   </svg>
-                  <h1 class="title">Olá, %1$s!</h1>
-                  <p class="subtitle">Bem-vindo à Barbershop. Criámos uma conta para ti.</p>
+                  <h1 class="title" style="color:#e9eef7 !important;font-size:26px;font-weight:700;margin:0 0 16px;text-align:center">Olá, %1$s!</h1>
+                  <p class="subtitle" style="color:#9ca3af !important;font-size:16px;margin:0 0 36px;text-align:center">Bem-vindo à Barbershop. Criámos uma conta para ti.</p>
                   
-                  <div class="welcome-card">
-                    <div class="welcome-title">Como começar</div>
-                    <p class="welcome-text">Falta apenas definires a tua senha para teres acesso completo à plataforma e poderes gerir as tuas marcações.</p>
+                  <div class="welcome-card" style="background:rgba(195,255,90,0.08) !important;border:1px solid rgba(195,255,90,0.2) !important">
+                    <div class="welcome-title" style="color:#C3FF5A !important">Como começar</div>
+                    <p class="welcome-text" style="color:#cbd4e6 !important">Falta apenas definires a tua senha para teres acesso completo à plataforma e poderes gerir as tuas marcações.</p>
                   </div>
                   
-                  <div class="steps">
+                  <div class="steps" style="background:rgba(0,0,0,0.3) !important;border:1px solid #2a3042 !important">
                     <div class="step">
-                      <div class="step-number">1</div>
-                      <div class="step-text">Clica no botão abaixo</div>
+                      <div class="step-number" style="background:#C3FF5A !important;color:#0f1117 !important">1</div>
+                      <div class="step-text" style="color:#e9eef7 !important">Clica no botão abaixo</div>
                     </div>
                     <div class="step">
-                      <div class="step-number">2</div>
-                      <div class="step-text">Define uma senha segura (mínimo 8 caracteres)</div>
+                      <div class="step-number" style="background:#C3FF5A !important;color:#0f1117 !important">2</div>
+                      <div class="step-text" style="color:#e9eef7 !important">Define uma senha segura (mínimo 8 caracteres)</div>
                     </div>
                     <div class="step">
-                      <div class="step-number">3</div>
-                      <div class="step-text">Acede à tua conta e marca o teu próximo corte</div>
+                      <div class="step-number" style="background:#C3FF5A !important;color:#0f1117 !important">3</div>
+                      <div class="step-text" style="color:#e9eef7 !important">Acede à tua conta e marca o teu próximo corte</div>
                     </div>
                   </div>
                   
@@ -497,11 +534,11 @@ public class Mailer {
                     </a>
                   </div>
                   
-                  <div class="warning">
-                    <svg class="warning-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <div class="warning" style="background:rgba(195,255,90,0.08) !important;border:1px solid rgba(195,255,90,0.2) !important">
+                    <svg class="warning-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C3FF5A" stroke-width="2" style="color:#C3FF5A !important">
                       <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
                     </svg>
-                    <p class="warning-text">Este link expira em 48 horas</p>
+                    <p class="warning-text" style="color:#cbd4e6 !important;margin:0">Este link expira em 48 horas</p>
                   </div>
                   
                   <p style="color:#6b7280;font-size:13px;text-align:center;margin:28px 0 0">Se não pediste esta conta, ignora este email.</p>
