@@ -64,55 +64,53 @@ public class EmailService {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
-  <meta name="supported-color-schemes" content="light">
 </head>
-<body style="margin:0;padding:0">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" bgcolor="#0f1117">
-    <tr><td align="center" style="padding:20px">
-      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width:600px" bgcolor="#16181d">
+<body style="margin:0;padding:0;background-color:#f5f5f5">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" bgcolor="#f5f5f5">
+    <tr><td align="center" style="padding:40px 20px">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width:600px;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08)" bgcolor="#ffffff">
         
         <!-- Header -->
         <tr>
-          <td align="center" bgcolor="#C3FF5A" style="padding:40px">
-            <div style="font-size:26px;font-weight:800;color:#0f1117;font-family:Arial,sans-serif">BARBERSHOP</div>
-            <div style="font-size:13px;color:#0f1117;padding-top:6px;font-family:Arial,sans-serif;opacity:0.7">Estilo & Tradição</div>
+          <td align="center" bgcolor="#C3FF5A" style="padding:48px 40px">
+            <div style="font-size:32px;font-weight:800;color:#0f1117;font-family:Arial,sans-serif;letter-spacing:-0.5px">BARBERSHOP</div>
+            <div style="font-size:14px;color:#0f1117;padding-top:8px;font-family:Arial,sans-serif;opacity:0.7;font-weight:500">Estilo & Tradição</div>
           </td>
         </tr>
         
         <!-- Alert -->
         <tr>
-          <td bgcolor="#16181d" style="padding:40px 40px 0 40px">
-            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" bgcolor="#1f2a1e" style="border:2px solid #C3FF5A;border-radius:8px">
-              <tr><td align="center" style="padding:20px;font-size:17px;font-weight:700;color:#C3FF5A;font-family:Arial,sans-serif">A tua marcação é daqui a 1 hora!</td></tr>
+          <td bgcolor="#ffffff" style="padding:32px 40px 0 40px">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" bgcolor="#fffbeb" style="border-left:4px solid #C3FF5A;border-radius:12px;overflow:hidden">
+              <tr><td align="center" style="padding:20px;font-size:18px;font-weight:700;color:#0f1117;font-family:Arial,sans-serif">A tua marcação é daqui a 1 hora!</td></tr>
             </table>
           </td>
         </tr>
         
-        <!-- Título -->
+        <!-- Saudação -->
         <tr>
-          <td bgcolor="#16181d" style="padding:32px 40px 12px 40px">
-            <div style="font-size:24px;font-weight:700;color:#e9eef7;font-family:Arial,sans-serif">Olá, %s</div>
+          <td bgcolor="#ffffff" style="padding:32px 40px 16px 40px">
+            <div style="font-size:24px;font-weight:700;color:#111111;font-family:Arial,sans-serif">Olá, %s</div>
           </td>
         </tr>
         <tr>
-          <td bgcolor="#16181d" style="padding:0 40px 32px 40px">
-            <div style="font-size:15px;color:#9ca3af;font-family:Arial,sans-serif;line-height:1.6">Este é um lembrete da tua marcação que se aproxima. Preparámos tudo para te receber!</div>
+          <td bgcolor="#ffffff" style="padding:0 40px 32px 40px">
+            <div style="font-size:16px;color:#666666;font-family:Arial,sans-serif;line-height:1.6">Este é um lembrete da tua marcação que se aproxima. Preparámos tudo para te receber!</div>
           </td>
         </tr>
         
         <!-- Info Card -->
         <tr>
-          <td bgcolor="#16181d" style="padding:0 40px 28px 40px">
-            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" bgcolor="#0f1117" style="border:1px solid #2a3042;border-radius:12px">
+          <td bgcolor="#ffffff" style="padding:0 40px 32px 40px">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" bgcolor="#f9fafb" style="border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">
               
               <!-- Barbeiro -->
               <tr>
-                <td style="padding:18px 20px;border-bottom:1px solid #2a3042">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <td style="padding:16px 20px;border-bottom:1px solid #e5e7eb">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
                     <tr>
-                      <td width="100" style="font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:0.5px">BARBEIRO</td>
-                      <td style="font-size:16px;font-weight:500;color:#e9eef7;font-family:Arial,sans-serif">%s</td>
+                      <td width="110" style="font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:0.5px">Barbeiro</td>
+                      <td style="font-size:16px;font-weight:600;color:#111111;font-family:Arial,sans-serif">%s</td>
                     </tr>
                   </table>
                 </td>
@@ -120,11 +118,11 @@ public class EmailService {
               
               <!-- Serviço -->
               <tr>
-                <td style="padding:18px 20px;border-bottom:1px solid #2a3042">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <td style="padding:16px 20px;border-bottom:1px solid #e5e7eb">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
                     <tr>
-                      <td width="100" style="font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:0.5px">SERVIÇO</td>
-                      <td style="font-size:16px;font-weight:500;color:#e9eef7;font-family:Arial,sans-serif">%s <span style="color:#6b7280">(%d min)</span></td>
+                      <td width="110" style="font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:0.5px">Serviço</td>
+                      <td style="font-size:16px;font-weight:600;color:#111111;font-family:Arial,sans-serif">%s <span style="color:#6b7280;font-weight:400">(%d min)</span></td>
                     </tr>
                   </table>
                 </td>
@@ -132,11 +130,11 @@ public class EmailService {
               
               <!-- Quando -->
               <tr>
-                <td style="padding:18px 20px;border-bottom:1px solid #2a3042">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <td style="padding:16px 20px;border-bottom:1px solid #e5e7eb">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
                     <tr>
-                      <td width="100" style="font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:0.5px">QUANDO</td>
-                      <td style="font-size:16px;font-weight:700;color:#C3FF5A;font-family:Arial,sans-serif">%s às %s</td>
+                      <td width="110" style="font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:0.5px">Quando</td>
+                      <td style="font-size:16px;font-weight:700;color:#0f1117;font-family:Arial,sans-serif">%s às %s</td>
                     </tr>
                   </table>
                 </td>
@@ -144,11 +142,11 @@ public class EmailService {
               
               <!-- Termina -->
               <tr>
-                <td style="padding:18px 20px;border-bottom:1px solid #2a3042">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <td style="padding:16px 20px;border-bottom:1px solid #e5e7eb">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
                     <tr>
-                      <td width="100" style="font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:0.5px">TERMINA</td>
-                      <td style="font-size:16px;font-weight:500;color:#e9eef7;font-family:Arial,sans-serif">%s</td>
+                      <td width="110" style="font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:0.5px">Termina</td>
+                      <td style="font-size:16px;font-weight:600;color:#111111;font-family:Arial,sans-serif">%s</td>
                     </tr>
                   </table>
                 </td>
@@ -156,11 +154,11 @@ public class EmailService {
               
               <!-- Preço -->
               <tr>
-                <td style="padding:18px 20px;border-bottom:1px solid #2a3042">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <td style="padding:16px 20px;border-bottom:1px solid #e5e7eb;background-color:#f0fdf4">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
                     <tr>
-                      <td width="100" style="font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:0.5px">PREÇO</td>
-                      <td style="font-size:16px;font-weight:700;color:#C3FF5A;font-family:Arial,sans-serif">%s</td>
+                      <td width="110" style="font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:0.5px">Preço</td>
+                      <td style="font-size:18px;font-weight:800;color:#0f1117;font-family:Arial,sans-serif">%s</td>
                     </tr>
                   </table>
                 </td>
@@ -168,11 +166,11 @@ public class EmailService {
               
               <!-- Notas -->
               <tr>
-                <td style="padding:18px 20px">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <td style="padding:16px 20px">
+                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%">
                     <tr>
-                      <td width="100" style="font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:0.5px">NOTAS</td>
-                      <td style="font-size:16px;font-weight:500;color:#9ca3af;font-family:Arial,sans-serif">%s</td>
+                      <td width="110" style="font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;font-family:Arial,sans-serif;letter-spacing:0.5px;vertical-align:top">Notas</td>
+                      <td style="font-size:14px;color:#666666;font-family:Arial,sans-serif;line-height:1.5">%s</td>
                     </tr>
                   </table>
                 </td>
@@ -184,12 +182,12 @@ public class EmailService {
         
         <!-- Dicas -->
         <tr>
-          <td bgcolor="#16181d" style="padding:0 40px 32px 40px">
-            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" bgcolor="#1a231a" style="border:1px solid #2f4a2f;border-radius:12px">
+          <td bgcolor="#ffffff" style="padding:0 40px 32px 40px">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" bgcolor="#f0fdf4" style="border:2px solid #C3FF5A;border-radius:12px;overflow:hidden">
               <tr>
                 <td style="padding:24px">
-                  <div style="font-size:13px;font-weight:700;color:#C3FF5A;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;font-family:Arial,sans-serif">DICAS PARA A TUA VISITA</div>
-                  <div style="font-size:14px;color:#cbd4e6;font-family:Arial,sans-serif;line-height:1.8">
+                  <div style="font-size:13px;font-weight:700;color:#0f1117;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;font-family:Arial,sans-serif">⚡ Dicas para a tua visita</div>
+                  <div style="font-size:14px;color:#374151;font-family:Arial,sans-serif;line-height:1.8">
                     • Chega com 5 minutos de antecedência<br>
                     • Se precisares de cancelar, avisa com antecedência<br>
                     • Traz uma foto de referência se tiveres<br>
@@ -203,23 +201,23 @@ public class EmailService {
         
         <!-- Contacto -->
         <tr>
-          <td bgcolor="#16181d" style="padding:0 40px 32px 40px">
-            <div style="font-size:14px;color:#9ca3af;text-align:center;font-family:Arial,sans-serif">
-              Precisas de alterar algo? <a href="mailto:geral@barbershop.pt" style="color:#C3FF5A;text-decoration:none;font-weight:600">Contacta-nos</a>
+          <td bgcolor="#ffffff" style="padding:0 40px 40px 40px;text-align:center">
+            <div style="font-size:14px;color:#6b7280;font-family:Arial,sans-serif">
+              Precisas de alterar algo? <a href="mailto:geral@barbershop.pt" style="color:#0f1117;text-decoration:none;font-weight:700;border-bottom:2px solid #C3FF5A">Contacta-nos</a>
             </div>
           </td>
         </tr>
         
         <!-- Footer -->
         <tr>
-          <td bgcolor="#16181d" style="padding:32px 40px;text-align:center;border-top:1px solid #2a3042">
-            <div style="font-size:13px;color:#e9eef7;font-weight:700;font-family:Arial,sans-serif;margin-bottom:8px">Barbershop</div>
-            <div style="font-size:12px;color:#6b7280;font-family:Arial,sans-serif;line-height:1.8">
+          <td bgcolor="#111111" style="padding:32px 40px;text-align:center">
+            <div style="font-size:14px;color:#ffffff;font-weight:700;font-family:Arial,sans-serif;margin-bottom:8px">Barbershop</div>
+            <div style="font-size:12px;color:#9ca3af;font-family:Arial,sans-serif;line-height:1.8">
               Rua Principal, 123, Lisboa<br>
               (+351) 900 000 000<br><br>
-              <a href="#" style="color:#9ca3af;text-decoration:none">Instagram</a> · 
-              <a href="#" style="color:#9ca3af;text-decoration:none">Facebook</a> · 
-              <a href="#" style="color:#9ca3af;text-decoration:none">Website</a>
+              <a href="#" style="color:#C3FF5A;text-decoration:none">Instagram</a> · 
+              <a href="#" style="color:#C3FF5A;text-decoration:none">Facebook</a> · 
+              <a href="#" style="color:#C3FF5A;text-decoration:none">Website</a>
             </div>
           </td>
         </tr>
@@ -232,8 +230,8 @@ public class EmailService {
             """, 
             clientName,     // %s
             barberName,     // %s
-            serviceName,    // %d
-            durationMin,    // %s
+            serviceName,    // %s
+            durationMin,    // %d
             date,           // %s
             startTime,      // %s
             endTime,        // %s
