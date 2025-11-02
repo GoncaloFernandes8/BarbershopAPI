@@ -81,6 +81,26 @@ public class Mailer {
         String id = appt.getId().toString();
         String notes = appt.getNotes() == null ? "" : appt.getNotes();
 
+        // Ícones SVG inline
+        String iconCheck = """
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            """;
+        String iconCalendar = """
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            """;
+        String iconScissors = """
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"/></svg>
+            """;
+        String iconUser = """
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            """;
+        String iconTag = """
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1"/></svg>
+            """;
+        String iconNote = """
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+            """;
+
         return """
     <!doctype html>
     <html lang="pt">
@@ -100,20 +120,23 @@ public class Mailer {
         .title{font-size:24px;font-weight:700;color:#e9eef7;margin:0 0 12px;line-height:1.3}
         .subtitle{color:#9ca3af;font-size:15px;line-height:1.6;margin:0 0 32px}
         .card{background:rgba(195,255,90,0.08);border:1px solid rgba(195,255,90,0.2);border-radius:12px;padding:24px;margin:0 0 32px}
-        .info-row{display:flex;padding:12px 0;border-bottom:1px solid rgba(195,255,90,0.1)}
+        .info-row{display:flex;align-items:center;padding:14px 0;border-bottom:1px solid rgba(195,255,90,0.1)}
         .info-row:last-child{border-bottom:none}
-        .info-label{color:#9ca3af;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;min-width:110px;flex-shrink:0}
+        .info-icon{color:#C3FF5A;margin-right:12px;display:flex;align-items:center;flex-shrink:0}
+        .info-label{color:#9ca3af;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;min-width:90px;flex-shrink:0}
         .info-value{color:#e9eef7;font-size:15px;font-weight:500;flex:1}
         .highlight{color:#C3FF5A;font-weight:700}
         .cta{display:inline-block;background:#C3FF5A;color:#0f1117;text-decoration:none;padding:16px 32px;border-radius:10px;font-weight:700;font-size:15px;transition:all 0.2s;box-shadow:0 4px 12px rgba(195,255,90,0.3)}
         .cta:hover{background:#b3ef4a;transform:translateY(-2px);box-shadow:0 6px 20px rgba(195,255,90,0.4)}
         .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(195,255,90,0.3),transparent);margin:32px 0}
-        .note{background:rgba(251,191,36,0.1);border-left:4px solid #fbbf24;padding:16px;border-radius:8px;margin:24px 0}
+        .note{background:rgba(251,191,36,0.1);border-left:4px solid #fbbf24;padding:16px;border-radius:8px;margin:24px 0;display:flex;gap:12px}
+        .note-icon{color:#fbbf24;flex-shrink:0;margin-top:2px}
+        .note-content{flex:1}
         .note-label{color:#fbbf24;font-size:12px;font-weight:700;text-transform:uppercase;margin:0 0 8px}
         .note-text{color:#e9eef7;font-size:14px;margin:0;line-height:1.6}
         .footer{padding:32px 40px;text-align:center;color:#6b7280;font-size:13px;line-height:1.6}
         .footer-link{color:#9ca3af;text-decoration:none}
-        .badge{display:inline-block;background:rgba(195,255,90,0.15);color:#C3FF5A;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;margin:0 0 24px}
+        .badge{display:inline-flex;align-items:center;gap:6px;background:rgba(195,255,90,0.15);color:#C3FF5A;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;margin:0 0 24px}
       </style>
     </head>
     <body>
@@ -122,30 +145,34 @@ public class Mailer {
           <tr><td align="center">
             <div class="container">
               <div class="header">
-                <h1 class="brand">💈 BARBERSHOP</h1>
+                <h1 class="brand">BARBERSHOP</h1>
                 <p class="tagline">Estilo & Tradição</p>
               </div>
               
               <div class="content">
-                <div class="badge">✓ CONFIRMADA</div>
+                <div class="badge">%8$s CONFIRMADA</div>
                 <h2 class="title">A tua marcação está confirmada!</h2>
                 <p class="subtitle">Preparámos tudo para te receber. Segue os detalhes da tua visita:</p>
                 
                 <div class="card">
                   <div class="info-row">
-                    <div class="info-label">📅 Quando</div>
+                    <div class="info-icon">%9$s</div>
+                    <div class="info-label">Quando</div>
                     <div class="info-value highlight">%1$s</div>
                   </div>
                   <div class="info-row">
-                    <div class="info-label">✂️ Serviço</div>
+                    <div class="info-icon">%10$s</div>
+                    <div class="info-label">Serviço</div>
                     <div class="info-value">%2$s <span style="color:#9ca3af">(%3$d min)</span></div>
                   </div>
                   <div class="info-row">
-                    <div class="info-label">👤 Barbeiro</div>
+                    <div class="info-icon">%11$s</div>
+                    <div class="info-label">Barbeiro</div>
                     <div class="info-value">%4$s</div>
                   </div>
                   <div class="info-row">
-                    <div class="info-label">🔖 Referência</div>
+                    <div class="info-icon">%12$s</div>
+                    <div class="info-label">Referência</div>
                     <div class="info-value">#%5$s</div>
                   </div>
                 </div>
@@ -166,7 +193,7 @@ public class Mailer {
               <div class="footer">
                 <strong style="color:#e9eef7">Barbershop</strong><br>
                 Rua Principal, 123 · Lisboa<br>
-                📞 (+351) 900 000 000 · ✉️ geral@barbershop.pt<br><br>
+                (+351) 900 000 000 · geral@barbershop.pt<br><br>
                 <a href="#" class="footer-link">Instagram</a> · 
                 <a href="#" class="footer-link">Facebook</a> · 
                 <a href="#" class="footer-link">Website</a>
@@ -183,8 +210,13 @@ public class Mailer {
                 svc.getDurationMin(),              // %3$d
                 barber.getName(),                  // %4$s
                 id,                                // %5$s
-                notes.isBlank() ? "" : "<div class=\"note\"><div class=\"note-label\">📝 Notas</div><p class=\"note-text\">" + escapeHtml(notes) + "</p></div>", // %6$s
-                successUrl                         // %7$s
+                notes.isBlank() ? "" : "<div class=\"note\"><div class=\"note-icon\">" + iconNote + "</div><div class=\"note-content\"><div class=\"note-label\">Notas</div><p class=\"note-text\">" + escapeHtml(notes) + "</p></div></div>", // %6$s
+                successUrl,                        // %7$s
+                iconCheck,                         // %8$s
+                iconCalendar,                      // %9$s
+                iconScissors,                      // %10$s
+                iconUser,                          // %11$s
+                iconTag                            // %12$s
         );
     }
 
@@ -259,7 +291,14 @@ public class Mailer {
             var helper = new MimeMessageHelper(mime, true, StandardCharsets.UTF_8.name());
             helper.setFrom(new InternetAddress(fromEmail, fromName));
             helper.setTo(to);
-            helper.setSubject("🔐 Confirma o teu email · Barbershop");
+            helper.setSubject("Confirma o teu email · Barbershop");
+
+            String iconShield = """
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                """;
+            String iconClock = """
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                """;
 
             var html = """
       <!doctype html>
@@ -275,13 +314,14 @@ public class Mailer {
           .header{background:#C3FF5A;padding:32px 40px;text-align:center}
           .brand{font-size:28px;font-weight:800;color:#0f1117;margin:0}
           .content{padding:40px;text-align:center}
-          .icon{font-size:64px;margin:0 0 24px}
+          .icon{color:#C3FF5A;margin:0 0 24px;display:flex;justify-content:center}
           .title{font-size:26px;font-weight:700;color:#e9eef7;margin:0 0 16px}
           .text{color:#9ca3af;font-size:16px;line-height:1.6;margin:0 0 32px}
           .cta{display:inline-block;background:#C3FF5A;color:#0f1117;text-decoration:none;padding:16px 40px;border-radius:10px;font-weight:700;font-size:16px;box-shadow:0 4px 12px rgba(195,255,90,0.3)}
           .cta:hover{background:#b3ef4a}
           .footer{padding:32px;text-align:center;color:#6b7280;font-size:13px}
-          .note{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);border-radius:8px;padding:16px;margin:24px 0;color:#9ca3af;font-size:14px}
+          .note{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);border-radius:8px;padding:16px;margin:24px 0;color:#9ca3af;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px}
+          .note-icon{color:#60a5fa}
         </style>
       </head>
       <body>
@@ -290,22 +330,23 @@ public class Mailer {
             <tr><td align="center">
               <div class="container">
                 <div class="header">
-                  <div class="brand">💈 BARBERSHOP</div>
+                  <div class="brand">BARBERSHOP</div>
                 </div>
                 <div class="content">
-                  <div class="icon">🔐</div>
+                  <div class="icon">%s</div>
                   <h1 class="title">Confirma o teu email</h1>
                   <p class="text">Estás quase! Clica no botão abaixo para verificares o teu email e ativares a tua conta.</p>
                   <a href="%s" class="cta">Confirmar email →</a>
                   <div class="note">
-                    ⏱️ Este link expira em <strong>24 horas</strong>
+                    <span class="note-icon">%s</span>
+                    <span>Este link expira em <strong>24 horas</strong></span>
                   </div>
                   <p style="color:#6b7280;font-size:13px;margin:24px 0 0">Se não criaste esta conta, podes ignorar este email.</p>
                 </div>
                 <div class="footer">
                   <strong style="color:#e9eef7">Barbershop</strong><br>
-                  📍 Rua Principal, 123 · Lisboa<br>
-                  📞 (+351) 900 000 000
+                  Rua Principal, 123 · Lisboa<br>
+                  (+351) 900 000 000
                 </div>
               </div>
             </td></tr>
@@ -313,7 +354,7 @@ public class Mailer {
         </div>
       </body>
       </html>
-    """.formatted(verifyLink);
+    """.formatted(iconShield, verifyLink, iconClock);
 
             var text = """
       Confirma o teu email
@@ -341,7 +382,14 @@ public class Mailer {
             var helper = new MimeMessageHelper(mime, true, StandardCharsets.UTF_8.name());
             helper.setFrom(new InternetAddress(fromEmail, fromName));
             helper.setTo(to);
-            helper.setSubject("👋 Bem-vindo à Barbershop, " + clientName + "!");
+            helper.setSubject("Bem-vindo à Barbershop, " + clientName + "!");
+
+            String iconStar = """
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                """;
+            String iconClock = """
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                """;
 
             var html = """
       <!doctype html>
@@ -358,7 +406,9 @@ public class Mailer {
           .brand{font-size:28px;font-weight:800;color:#0f1117;margin:0}
           .content{padding:40px}
           .greeting{font-size:32px;font-weight:700;color:#e9eef7;margin:0 0 16px;text-align:center}
-          .welcome{background:rgba(195,255,90,0.08);border:1px solid rgba(195,255,90,0.2);border-radius:12px;padding:24px;margin:0 0 32px}
+          .welcome{background:rgba(195,255,90,0.08);border:1px solid rgba(195,255,90,0.2);border-radius:12px;padding:24px;margin:0 0 32px;display:flex;gap:16px;align-items:flex-start}
+          .welcome-icon{color:#C3FF5A;flex-shrink:0;margin-top:2px}
+          .welcome-content{flex:1}
           .welcome-title{color:#C3FF5A;font-size:14px;font-weight:700;text-transform:uppercase;margin:0 0 12px;letter-spacing:1px}
           .welcome-text{color:#9ca3af;font-size:15px;line-height:1.6;margin:0}
           .steps{margin:32px 0}
@@ -368,7 +418,8 @@ public class Mailer {
           .cta-container{text-align:center;margin:32px 0}
           .cta{display:inline-block;background:#C3FF5A;color:#0f1117;text-decoration:none;padding:18px 48px;border-radius:12px;font-weight:800;font-size:16px;box-shadow:0 4px 12px rgba(195,255,90,0.3);transition:all 0.2s}
           .cta:hover{background:#b3ef4a;transform:translateY(-2px);box-shadow:0 6px 20px rgba(195,255,90,0.4)}
-          .expiry{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:16px;margin:24px 0;text-align:center}
+          .expiry{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:16px;margin:24px 0;display:flex;align-items:center;justify-content:center;gap:8px}
+          .expiry-icon{color:#ef4444}
           .expiry-text{color:#f87171;font-size:14px;font-weight:600;margin:0}
           .footer{padding:32px;text-align:center;color:#6b7280;font-size:13px;line-height:1.8}
         </style>
@@ -379,14 +430,17 @@ public class Mailer {
             <tr><td align="center">
               <div class="container">
                 <div class="header">
-                  <div class="brand">💈 BARBERSHOP</div>
+                  <div class="brand">BARBERSHOP</div>
                 </div>
                 <div class="content">
-                  <div class="greeting">Olá, %1$s! 👋</div>
+                  <div class="greeting">Olá, %1$s!</div>
                   
                   <div class="welcome">
-                    <div class="welcome-title">✨ Bem-vindo à família</div>
-                    <p class="welcome-text">Criámos uma conta para ti. Agora falta apenas um passo para começares a marcar os teus serviços e gerir as tuas visitas.</p>
+                    <div class="welcome-icon">%3$s</div>
+                    <div class="welcome-content">
+                      <div class="welcome-title">Bem-vindo à família</div>
+                      <p class="welcome-text">Criámos uma conta para ti. Agora falta apenas um passo para começares a marcar os teus serviços e gerir as tuas visitas.</p>
+                    </div>
                   </div>
                   
                   <div class="steps">
@@ -409,16 +463,17 @@ public class Mailer {
                   </div>
                   
                   <div class="expiry">
-                    <p class="expiry-text">⏱️ Este link expira em 48 horas</p>
+                    <span class="expiry-icon">%4$s</span>
+                    <p class="expiry-text">Este link expira em 48 horas</p>
                   </div>
                   
                   <p style="color:#6b7280;font-size:13px;text-align:center;margin:24px 0 0">Se não pediste esta conta, podes ignorar este email em segurança.</p>
                 </div>
                 <div class="footer">
                   <strong style="color:#e9eef7">Barbershop</strong><br>
-                  📍 Rua Principal, 123 · Lisboa<br>
-                  📞 (+351) 900 000 000 · ✉️ geral@barbershop.pt<br><br>
-                  Segue-nos nas redes sociais 👇<br>
+                  Rua Principal, 123 · Lisboa<br>
+                  (+351) 900 000 000 · geral@barbershop.pt<br><br>
+                  Segue-nos nas redes sociais<br>
                   <a href="#" style="color:#9ca3af;text-decoration:none">Instagram</a> · 
                   <a href="#" style="color:#9ca3af;text-decoration:none">Facebook</a>
                 </div>
@@ -428,10 +483,10 @@ public class Mailer {
         </div>
       </body>
       </html>
-    """.formatted(clientName, setPasswordLink);
+    """.formatted(clientName, setPasswordLink, iconStar, iconClock);
 
             var text = """
-      Olá, %1$s! 👋
+      Olá, %1$s!
       
       Bem-vindo à Barbershop!
       
