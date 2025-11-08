@@ -1,9 +1,8 @@
 package barbershopAPI.barbershopAPI.services;
 
-import barbershopAPI.barbershopAPI.entities.Client;
-import barbershopAPI.barbershopAPI.entities.PasswordResetToken;
+import barbershopAPI.barbershopAPI.entities.SetPasswordToken;
 import barbershopAPI.barbershopAPI.repositories.ClientRepository;
-import barbershopAPI.barbershopAPI.repositories.PasswordResetTokenRepository;
+import barbershopAPI.barbershopAPI.repositories.SetPasswordTokenRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +21,12 @@ import java.util.Base64;
 @Service
 @RequiredArgsConstructor
 public class PasswordResetService {
-    private final PasswordResetTokenRepository tokenRepo;
+    private final SetPasswordTokenRepository tokenRepo;
     private final ClientRepository clientRepo;
     private final Mailer mailer;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${FRONTEND_BASE_URL:https://example.com}")
+    @Value("${FRONTEND_BASE_URL:https://barbershop-frontend-nine.vercel.app}")
     String frontendBaseUrl;
 
     @Value("${PASSWORD_RESET_TOKEN_TTL_MIN:30}")
@@ -66,20 +65,21 @@ public class PasswordResetService {
             return;
         }
 
+        var client = clientOpt.get();
         var now = OffsetDateTime.now(ZoneOffset.UTC);
         var token = randomToken();
         var hash = sha256(token);
 
-        var resetToken = PasswordResetToken.builder()
+        var resetToken = SetPasswordToken.builder()
                 .tokenHash(hash)
-                .email(email)
+                .clientId(client.getId())
                 .expiresAt(now.plusMinutes(ttlMin))
                 .createdAt(now)
                 .build();
         tokenRepo.save(resetToken);
 
         var link = frontendBaseUrl.replaceAll("/+$", "") + "/redefinir-senha?token=" + token;
-        mailer.sendPasswordResetEmail(email, clientOpt.get().getName(), link);
+        mailer.sendPasswordResetEmail(email, client.getName(), link);
         
         log.info("Email de reset de password enviado para: {}", email);
     }
@@ -103,7 +103,7 @@ public class PasswordResetService {
         }
 
         // Atualizar password do cliente
-        var client = clientRepo.findByEmailIgnoreCase(resetToken.getEmail())
+        var client = clientRepo.findById(resetToken.getClientId())
                 .orElseThrow(() -> new IllegalStateException("Cliente não encontrado"));
 
         client.setPassword(passwordEncoder.encode(newPassword));
