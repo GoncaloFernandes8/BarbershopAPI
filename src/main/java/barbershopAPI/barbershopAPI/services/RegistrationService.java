@@ -55,10 +55,9 @@ public class RegistrationService {
     /** Inicia registo: cria token e envia email. NÃO cria Client ainda. */
     @Transactional
     public void startRegistration(String name, String phone, String email, String rawPassword){
-        // Se já existir cliente com este email, podes devolver 409 ou simplesmente enviar nota “já existe”.
+        // Se já existir cliente com este email, lança exceção
         if (clientRepo.findByEmailIgnoreCase(email).isPresent()) {
-            // Idempotente: não reveles muito; aqui opto por simplesmente sair sem enviar nada.
-            return;
+            throw new IllegalStateException("Este email já está registado. Tenta fazer login ou recuperar a tua senha.");
         }
 
         var now = OffsetDateTime.now(ZoneOffset.UTC);

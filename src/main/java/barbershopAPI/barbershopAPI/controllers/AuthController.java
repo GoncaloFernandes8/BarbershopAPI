@@ -25,9 +25,13 @@ public class AuthController {
 
     public record RegisterResponse(boolean sent){}
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest req){
-        registrationService.startRegistration(req.name(), req.phone(), req.email(), req.password());
-        return ResponseEntity.status(201).body(new RegisterResponse(true));
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest req){
+        try {
+            registrationService.startRegistration(req.name(), req.phone(), req.email(), req.password());
+            return ResponseEntity.status(201).body(new RegisterResponse(true));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(409).body(Map.of("message", e.getMessage()));
+        }
     }
 
     public record VerifyResponse(boolean verified, Long userId){}
