@@ -4,6 +4,7 @@ package barbershopAPI.barbershopAPI.controllers;
 import barbershopAPI.barbershopAPI.repositories.ClientRepository;
 import barbershopAPI.barbershopAPI.services.JwtService;
 import barbershopAPI.barbershopAPI.services.RegistrationService;
+import barbershopAPI.barbershopAPI.services.PasswordResetService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class AuthController {
     private final ClientRepository clientRepo;
     private final RegistrationService registrationService;
+    private final PasswordResetService passwordResetService;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
@@ -113,6 +115,29 @@ public class AuthController {
             ));
         } catch (Exception e) {
             return ResponseEntity.status(401).body(Map.of("message", "Refresh token inválido."));
+        }
+    }
+
+    // FORGOT PASSWORD - Solicitar reset
+    public record ForgotPasswordRequest(@Email String email){}
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@Valid @RequestBody ForgotPasswordRequest req){
+        passwordResetService.requestPasswordReset(req.email());
+        // Por segurança, sempre retornar sucesso (não revelar se email existe)
+        return ResponseEntity.ok(Map.of("message", "Se o email estiver registado, receberás instruções para redefinir a password."));
+    }
+
+    // RESET PASSWORD - Confirmar nova password
+    public record ResetPasswordRequest(@NotBlank String token, @NotBlank String newPassword){}
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequest req){
+        try {
+            passwordResetService.resetPassword(req.token(), req.newPassword());
+            return ResponseEntity.ok(Map.of("message", "Password redefinida com sucesso!"));
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(Map.of("message", "Token inválido ou expirado."));
+        } catch (IllegalStateException e){
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
     }
 

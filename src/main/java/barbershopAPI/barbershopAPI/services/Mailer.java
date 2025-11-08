@@ -586,4 +586,121 @@ Barbershop
         }
     }
 
+    @Async
+    public void sendPasswordResetEmail(String to, String clientName, String resetLink){
+        try {
+            var mime = mailSender.createMimeMessage();
+            var helper = new MimeMessageHelper(mime, true, StandardCharsets.UTF_8.name());
+            helper.setFrom(new InternetAddress(fromEmail, fromName));
+            helper.setTo(to);
+            helper.setSubject("Redefinir password · Barbershop");
+
+            var html = String.format("""
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="margin:0;padding:0;background-color:#f5f5f5">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" bgcolor="#f5f5f5">
+    <tr><td align="center" style="padding:40px 20px">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width:600px;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08)" bgcolor="#ffffff">
+        
+        <!-- Header -->
+        <tr>
+          <td align="center" bgcolor="#C3FF5A" style="padding:48px 40px">
+            <div style="font-size:32px;font-weight:800;color:#0f1117;font-family:Arial,sans-serif;letter-spacing:-0.5px">BARBERSHOP</div>
+            <div style="font-size:14px;color:#0f1117;padding-top:8px;font-family:Arial,sans-serif;opacity:0.7;font-weight:500">Estilo & Tradição</div>
+          </td>
+        </tr>
+        
+        <!-- Título -->
+        <tr>
+          <td bgcolor="#ffffff" style="padding:48px 40px 16px 40px;text-align:center">
+            <div style="font-size:26px;font-weight:700;color:#111111;font-family:Arial,sans-serif">Redefinir password</div>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#ffffff" style="padding:0 40px 36px 40px;text-align:center">
+            <div style="font-size:16px;color:#666666;font-family:Arial,sans-serif;line-height:1.6;max-width:400px;margin:0 auto">Olá, %s! Recebemos um pedido para redefinir a tua password. Clica no botão abaixo para criar uma nova.</div>
+          </td>
+        </tr>
+        
+        <!-- Botão -->
+        <tr>
+          <td bgcolor="#ffffff" style="padding:0 40px 24px 40px;text-align:center">
+            <a href="%s" style="display:inline-block;background-color:#C3FF5A;color:#0f1117;text-decoration:none;padding:16px 48px;border-radius:12px;font-weight:800;font-size:16px;font-family:Arial,sans-serif;box-shadow:0 2px 8px rgba(195,255,90,0.3)">Redefinir password</a>
+          </td>
+        </tr>
+        
+        <!-- Aviso -->
+        <tr>
+          <td bgcolor="#ffffff" style="padding:0 40px 40px 40px">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%%" bgcolor="#fffbeb" style="border-left:4px solid #C3FF5A;border-radius:12px;overflow:hidden">
+              <tr>
+                <td style="padding:20px">
+                  <div style="font-size:13px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-family:Arial,sans-serif">⚠️ Importante</div>
+                  <div style="font-size:14px;color:#374151;font-family:Arial,sans-serif;line-height:1.6">
+                    • Este link expira em <strong>30 minutos</strong><br>
+                    • Se não pediste este reset, ignora este email<br>
+                    • A tua password atual continua válida até redefinires
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        
+        <!-- Nota -->
+        <tr>
+          <td bgcolor="#ffffff" style="padding:0 40px 40px 40px;text-align:center">
+            <div style="font-size:13px;color:#6b7280;font-family:Arial,sans-serif">Não pediste este reset? Podes ignorar este email em segurança.</div>
+          </td>
+        </tr>
+        
+        <!-- Footer -->
+        <tr>
+          <td bgcolor="#111111" style="padding:40px;text-align:center">
+            <div style="font-size:14px;color:#ffffff;font-weight:700;font-family:Arial,sans-serif;margin-bottom:8px">Barbershop</div>
+            <div style="font-size:12px;color:#9ca3af;font-family:Arial,sans-serif;line-height:1.8">
+              Rua Principal, 123, Lisboa<br>
+              (+351) 900 000 000<br><br>
+              <a href="#" style="color:#C3FF5A;text-decoration:none">Instagram</a> · 
+              <a href="#" style="color:#C3FF5A;text-decoration:none">Facebook</a> · 
+              <a href="#" style="color:#C3FF5A;text-decoration:none">Website</a>
+            </div>
+          </td>
+        </tr>
+        
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>
+            """, clientName, resetLink);
+
+            var text = String.format("""
+Redefinir password
+
+Olá, %s!
+
+Recebemos um pedido para redefinir a tua password. Para criar uma nova password, acede ao link:
+%s
+
+Este link expira em 30 minutos.
+
+Se não pediste este reset, ignora este email.
+
+Barbershop
+            """, clientName, resetLink);
+
+            helper.setText(text, html);
+            mailSender.send(mime);
+            log.info("Email de reset de password enviado para {}", to);
+        } catch (Exception ex) {
+            log.warn("Falha a enviar email de reset de password para {}: {}", to, ex.getMessage(), ex);
+        }
+    }
+
 }
